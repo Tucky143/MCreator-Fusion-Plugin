@@ -1,0 +1,1 @@
+The amount of experience this recipe requires to craft.

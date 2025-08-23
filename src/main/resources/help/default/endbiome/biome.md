@@ -1,0 +1,1 @@
+The biome element you select here will be generated in the end dimension.

@@ -1,6 +1,6 @@
 {
-	${field$VAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")}.write(${input$text});
+	${field$VAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")}bw.write(${input$text});
 	<#if input$newLine == "true">
-	    ${field$VAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")}.newLine();
+	    ${field$VAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")}bw.newLine();
 	</#if>
 }

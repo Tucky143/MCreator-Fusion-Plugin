@@ -1,0 +1,1 @@
+This is the amount of items this recipe will yield. This amount will show up in the output slot.

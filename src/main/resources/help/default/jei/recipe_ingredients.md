@@ -1,0 +1,1 @@
+The ingredients of the recipe that will be part of the input slots. The order in which you add them matters.

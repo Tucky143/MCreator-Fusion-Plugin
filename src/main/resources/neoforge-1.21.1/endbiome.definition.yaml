@@ -1,0 +1,25 @@
+global_templates:
+  - template: endbiome/biomesource_mixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/BiomeSourceMixin.java"
+  - template: endbiome/theend_biomesource_mixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/TheEndBiomeSourceMixin.java"
+  - template: endbiome/weightedpicker.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/endbiomes/WeightedPicker.java"
+  - template: endbiome/theendbiomedata.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/endbiomes/TheEndBiomeData.java"
+  - template: endbiome/theendbiomes.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/endbiomes/TheEndBiomes.java"
+  - template: endbiome/sampler_hooks.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/endbiomes/SamplerHooks.java"
+  - template: endbiome/sampler_mixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/ClimateSamplerMixin.java"
+  - template: endbiome/noiseconfig_mixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/NoiseConfigMixin.java"
+  - template: endbiome/chunknoise_sampler_mixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/ChunkNoiseSamplerMixin.java"
+  - template: endbiome/surfacerule_accessor_mixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/NoiseGeneratorSettingsAccess.java"
+  - template: endbiome/endbiomes_registry.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameEndBiomes.java"
+  - template: endbiome/endbiomes_surfacerules.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameSurfaceRules.java"

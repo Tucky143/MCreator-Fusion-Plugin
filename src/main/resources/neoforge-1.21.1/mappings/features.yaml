@@ -1,0 +1,4 @@
+feature_chorus_plant:
+  - ChorusPlantFeature
+  - NoneFeatureConfiguration
+  - "minecraft:chorus_plant"

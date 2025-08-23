@@ -1,0 +1,1 @@
+INPUT slots can contain recipe ingredients. The ID can be 0 to the amount of ingredients your recipe contains minus 1, while the OUTPUT slot will contain the result item of the recipe.

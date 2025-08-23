@@ -1,0 +1,1 @@
+This is the item that you get after combining the left and right items in the anvil.

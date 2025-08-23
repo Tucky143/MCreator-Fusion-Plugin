@@ -1,0 +1,1 @@
+This determines which ingredient this slot will contain. Counting starts from 0, in order of which your ingredients were added in the recipe.

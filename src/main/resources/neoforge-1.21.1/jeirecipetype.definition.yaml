@@ -1,0 +1,11 @@
+global_templates:
+  - template: jei_recipetype/plugin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameJeiPlugin.java"
+  - template: jei_recipetype/recipe_registry.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameRecipeTypes.java"
+
+templates:
+  - template: jei_recipetype/recipe.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/jei_recipes/@NAMERecipe.java"
+  - template: jei_recipetype/category.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/jei_recipes/@NAMERecipeCategory.java"

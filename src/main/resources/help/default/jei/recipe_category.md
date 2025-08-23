@@ -1,0 +1,1 @@
+The recipe will be part of this JEI recipe category.

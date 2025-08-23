@@ -1,0 +1,34 @@
+{
+  "args0": [
+    {
+      "type": "field_data_list_selector",
+      "name": "recipe",
+      "datalist": "recipes",
+      "customEntryProviders": "jeirecipetype"
+    }
+  ],
+  "mutator": "item_list_mutator",
+  "output": "MCItem",
+  "colour": 350,
+  "mcreator": {
+    "toolbox_id": "just_enough_recipes",
+    "toolbox_init": [
+      "<mutation inputs=\"1\"></mutation>"
+    ],
+    "repeating_inputs": [
+      "entry"
+    ],
+    "fields": [
+      "recipe"
+    ],
+    "dependencies": [
+      {
+        "name": "world",
+        "type": "world"
+      }
+    ],
+    "required_apis": [
+      "jei"
+    ]
+  }
+}

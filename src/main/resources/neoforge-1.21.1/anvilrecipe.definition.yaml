@@ -1,0 +1,8 @@
+global_templates:
+  - template: anvil_recipe/anvil_plugin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameAnvilRecipes.java"
+    condition: ${settings.getMCreatorDependenciesRaw()?seq_contains("jei")}
+
+templates:
+  - template: anvil_recipe/anvil_recipe.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/anvilrecipes/@NAMEAnvilRecipe.java"

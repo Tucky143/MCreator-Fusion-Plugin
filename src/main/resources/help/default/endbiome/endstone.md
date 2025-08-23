@@ -1,0 +1,1 @@
+The selected block will be able to grow chorus plants on it.
