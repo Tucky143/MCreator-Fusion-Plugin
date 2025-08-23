@@ -1,0 +1,1 @@
+If this option is enabled, piglins will not attack the player similarly to wearing gold armor unless they are attacked first.

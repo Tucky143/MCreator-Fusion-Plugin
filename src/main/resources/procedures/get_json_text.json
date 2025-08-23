@@ -1,0 +1,32 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "name",
+      "check": "String"
+    },
+    {
+      "type": "input_dummy",
+      "name": "var"
+    }
+  ],
+  "extensions": [
+    "jsonobject_variables"
+  ],
+  "mutator": "variable_entity_input",
+  "output": "String",
+  "colour": "%{BKY_TEXTS_HUE}",
+  "mcreator": {
+    "group": "json",
+    "toolbox_id": "file_manager_data",
+    "toolbox_init": [
+      "<value name=\"name\"><block type=\"text\"><field name=\"TEXT\">name</field></block></value>"
+    ],
+    "inputs": [
+      "name"
+    ],
+    "fields": [
+      "VAR"
+    ]
+  }
+}

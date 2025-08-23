@@ -1,0 +1,1 @@
+_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(${input$name})), ${input$modifier});

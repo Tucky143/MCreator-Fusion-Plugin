@@ -1,0 +1,1 @@
+(entity instanceof LivingEntity && ((LivingEntity) ${input$entity}).getAttribute(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(${input$name}))) != null)

@@ -1,0 +1,1 @@
+The name of the custom curios slot, which will show up in the curios bauble inventory and the tooltips of baubles that use it.

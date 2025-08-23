@@ -1,0 +1,28 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "line",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "72",
+  "mcreator": {
+    "toolbox_id": "itemtooltips",
+    "toolbox_init": [
+      "<value name=\"line\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
+    ],
+    "dependencies": [
+      {
+        "name": "tooltip",
+        "type": "tooltip"
+      }
+    ],
+    "inputs": [
+      "line"
+    ]
+  }
+}

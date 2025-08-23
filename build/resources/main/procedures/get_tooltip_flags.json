@@ -1,0 +1,16 @@
+{
+  "args0": [
+  ],
+  "inputsInline": true,
+  "output": "Boolean",
+  "colour": "72",
+  "mcreator": {
+    "toolbox_id": "itemtooltips",
+    "dependencies": [
+      {
+        "name": "tooltip",
+        "type": "tooltip"
+      }
+    ]
+  }
+}

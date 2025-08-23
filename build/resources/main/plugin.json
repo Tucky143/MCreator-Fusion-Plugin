@@ -1,0 +1,14 @@
+{
+  "id": "fusion",
+  "weight": 4200,
+  "javaplugin": "net.tucky143.fusion.Launcher",
+  "supportedversions": [
+    2025002
+  ],
+  "info": {
+    "name": "Fusion",
+    "version": "1.0",
+    "description": "Adds a bunch of plugins to improve the general MCreator experience",
+    "author": "Tucky143, NerdyPuzzle, Goldorion, zsemper"
+  }
+}

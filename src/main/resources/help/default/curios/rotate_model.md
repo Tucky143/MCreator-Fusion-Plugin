@@ -1,0 +1,1 @@
+If this option is enabled, the rendered 3d model will rotate with the player while sneaking.

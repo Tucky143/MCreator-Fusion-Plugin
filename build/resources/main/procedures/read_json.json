@@ -1,0 +1,38 @@
+{
+  "args0": [
+    {
+      "type": "input_dummy",
+      "name": "var"
+    },
+    {
+      "type": "input_statement",
+      "name": "values"
+    },
+    {
+      "type": "input_dummy",
+      "name": "jobjvar"
+    }
+  ],
+  "extensions": [
+    "file_variables",
+    "custom_jsonobject_variables"
+  ],
+  "mutator": "variable_entity_input",
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 270,
+  "mcreator": {
+    "group": "json",
+    "toolbox_id": "file_manager_actions",
+    "statements": [
+      {
+        "name": "values"
+      }
+    ],
+    "fields": [
+      "VAR",
+      "JOBJVAR"
+    ]
+  }
+}

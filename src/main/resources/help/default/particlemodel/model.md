@@ -1,0 +1,1 @@
+This is the model that will render as the particle.

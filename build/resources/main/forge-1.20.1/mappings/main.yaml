@@ -1,0 +1,3 @@
+Attribute: net.minecraft.world.entity.ai.attributes.Attribute
+Attributes: net.minecraft.world.entity.ai.attributes.Attributes
+UUID: java.util.UUID

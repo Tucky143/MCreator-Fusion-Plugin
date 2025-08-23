@@ -1,0 +1,1 @@
+((LivingEntity) ${input$entity}).getAttribute(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(${input$name}))).setBaseValue(${input$value});

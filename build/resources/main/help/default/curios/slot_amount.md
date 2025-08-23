@@ -1,0 +1,1 @@
+The amount of slots that will be added by this bauble.

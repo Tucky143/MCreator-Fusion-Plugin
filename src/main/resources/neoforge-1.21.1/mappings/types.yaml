@@ -1,0 +1,4 @@
+file: File
+tooltip: List<Component>
+jsonobject: com.google.gson.JsonObject
+jsonarray: com.google.gson.JsonArray

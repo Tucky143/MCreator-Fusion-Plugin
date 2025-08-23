@@ -1,0 +1,28 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "modifier",
+      "check": "Modifier"
+    },
+    {
+      "type": "field_data_list_selector",
+      "name": "attribute",
+      "datalist": "attribute",
+      "customEntryProviders": "attribute"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 350,
+  "mcreator": {
+    "toolbox_id": "azz_attr",
+    "fields": [
+      "attribute"
+    ],
+    "inputs": [
+      "modifier"
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+global_templates:
+  - template: bauble/slot_builder.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameCuriosSlots.java"
+
+  - template: bjson/identifiers/back.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/back.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'BACK')?size != 0}"
+  - template: bjson/identifiers/belt.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/belt.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'BELT')?size != 0}"
+  - template: bjson/identifiers/body.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/body.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'BODY')?size != 0}"
+  - template: bjson/identifiers/bracelet.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/bracelet.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'BRACELET')?size != 0}"
+  - template: bjson/identifiers/charm.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/charm.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'CHARM')?size != 0}"
+  - template: bjson/identifiers/curio.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/curio.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'CURIO')?size != 0}"
+  - template: bjson/identifiers/hands.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/hands.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'HANDS')?size != 0}"
+  - template: bjson/identifiers/head.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/head.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'HEAD')?size != 0}"
+  - template: bjson/identifiers/necklace.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/necklace.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'NECKLACE')?size != 0}"
+  - template: bjson/identifiers/ring.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/ring.json"
+    condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'RING')?size != 0}"
+
+  - template: rendering/definitions.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameLayerDefinitions.java"
+  - template: rendering/registry.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameCuriosRenderers.java"
+
+  - template: bauble/properties.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameCuriosProperties.java"
+
+templates:
+  - template: bauble/item.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/@NAMEItem.java"
+  - template: bauble/item_container.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/inventory/@NAMEInventoryCapability.java"
+    condition: hasInventory()
+  - template: bjson/item.json.ftl
+    writer: json
+    condition:
+      - "renderType #= 0"
+      - "hasNormalModel()"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: bjson/tool.json.ftl
+    writer: json
+    condition:
+      - "renderType #= 0"
+      - "hasToolModel()"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: bjson/item_cmodel.json.ftl
+    writer: json
+    condition: "renderType #= 1"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: bjson/item_cmodel_obj.json.ftl
+    writer: json
+    condition: "renderType #= 2"
+    variables: "type=item"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+
+  - template: rendering/renderer.java.ftl
+    condition: hasModel()
+    name: "@SRCROOT/@BASEPACKAGEPATH/client/renderer/@NAMERenderer.java"
+    
+list_templates:
+  - name: "Item states"
+    listData: data.getModels()
+    forEach:
+      - template: bjson/item.json.ftl
+        writer: json
+        condition:
+          - "renderType #= 0"
+          - "hasNormalModel()"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+      - template: bjson/tool.json.ftl
+        writer: json
+        condition:
+          - "renderType #= 0"
+          - "hasToolModel()"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+      - template: bjson/item_cmodel.json.ftl
+        writer: json
+        condition: "renderType #= 1"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+      - template: bjson/item_cmodel_obj.json.ftl
+        writer: json
+        condition: "renderType #= 2"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+
+localizationkeys:
+  - key: item.@modid.@registryname
+    mapto: name
+  - fromlist: data.getFixedSpecialInformation()
+    key: item.@modid.@registryname.description_@item_index

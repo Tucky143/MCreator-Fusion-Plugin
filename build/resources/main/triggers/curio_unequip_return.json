@@ -1,0 +1,31 @@
+{
+  "dependencies_provided": [
+{
+      "name": "itemstack",
+      "type": "itemstack"
+    },
+    {
+      "name": "world",
+      "type": "world"
+    },
+    {
+      "name": "x",
+      "type": "number"
+    },
+    {
+      "name": "y",
+      "type": "number"
+    },
+    {
+      "name": "z",
+      "type": "number"
+    },
+	{
+      "name": "entity",
+      "type": "entity"
+    }
+  ],
+  "cancelable": "false",
+  "has_result": "false",
+  "side": "server"
+}

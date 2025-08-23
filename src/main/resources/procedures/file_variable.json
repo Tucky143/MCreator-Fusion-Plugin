@@ -1,0 +1,40 @@
+{
+  "args0": [
+    {
+      "type": "input_dummy",
+      "name": "var"
+    },
+    {
+      "type": "input_value",
+      "name": "name",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "location",
+      "check": "String"
+    }
+  ],
+  "extensions": [
+    "file_variables"
+  ],
+  "mutator": "variable_entity_input",
+  "output": "File",
+  "inputsInline": true,
+  "colour": 270,
+  "mcreator": {
+    "group": "file",
+    "toolbox_id": "file_manager_data",
+    "toolbox_init": [
+      "<value name=\"name\"><block type=\"text\"><field name=\"TEXT\">name.extension</field></block></value>",
+      "<value name=\"location\"><block type=\"text\"><field name=\"TEXT\">location</field></block></value>"
+    ],
+    "fields": [
+      "VAR"
+    ],
+    "inputs": [
+      "name",
+      "location"
+    ]
+  }
+}

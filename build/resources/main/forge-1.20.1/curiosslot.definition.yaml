@@ -1,0 +1,12 @@
+global_templates:
+  - template: bauble/custom_slot_builder.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameCustomCuriosSlots.java"
+
+templates:
+  - template: bjson/identifiers/custom.json.ftl
+    writer: json
+    name: "@RESROOT/data/curios/tags/items/@registryname.json"
+
+localizationkeys:
+  - key: curios.identifier.@registryname
+    mapto: name

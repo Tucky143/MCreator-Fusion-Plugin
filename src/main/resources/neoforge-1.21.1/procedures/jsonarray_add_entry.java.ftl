@@ -1,0 +1,1 @@
+${field$VAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")}.add(${input$entry});

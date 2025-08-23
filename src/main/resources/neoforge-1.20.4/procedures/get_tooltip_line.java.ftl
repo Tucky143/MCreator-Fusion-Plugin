@@ -1,0 +1,1 @@
+(tooltip.get(${input$line}).getString())

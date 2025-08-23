@@ -1,0 +1,1 @@
+Default value of the attribute. This value is set when the game is loaded (before the main menu).

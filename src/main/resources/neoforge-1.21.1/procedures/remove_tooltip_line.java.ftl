@@ -1,0 +1,1 @@
+tooltip.remove(${input$line});

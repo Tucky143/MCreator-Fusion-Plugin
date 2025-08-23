@@ -1,0 +1,40 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "name",
+      "check": "String"
+    },
+    {
+      "type": "input_dummy",
+      "name": "var"
+    },
+    {
+      "type": "input_dummy",
+      "name": "jobjvar"
+    }
+  ],
+  "extensions": [
+    "jsonobject_variables",
+    "custom_jsonobject_variables"
+  ],
+  "mutator": "variable_entity_input",
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#5B3B77",
+  "mcreator": {
+    "group": "json",
+    "toolbox_id": "file_manager_actions",
+    "toolbox_init": [
+    "<value name=\"name\"><block type=\"text\"><field name=\"TEXT\">name</field></block></value>"
+    ],
+    "fields": [
+      "VAR",
+      "JOBJVAR"
+    ],
+    "inputs": [
+      "name"
+    ]
+  }
+}

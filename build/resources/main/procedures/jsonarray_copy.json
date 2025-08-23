@@ -1,0 +1,21 @@
+{
+  "args0": [
+    {
+      "type": "input_dummy",
+      "name": "var"
+    }
+  ],
+  "extensions": [
+    "jsonarray_variables"
+  ],
+  "mutator": "variable_entity_input",
+  "output": "JsonArray",
+  "colour": "#6d175a",
+  "mcreator": {
+    "group": "utils",
+    "toolbox_id": "file_manager_jsonarray",
+    "fields": [
+      "VAR"
+    ]
+  }
+}

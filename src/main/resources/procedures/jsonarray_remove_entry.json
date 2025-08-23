@@ -1,0 +1,33 @@
+{
+  "args0": [
+    {
+      "type": "input_dummy",
+      "name": "var"
+    },
+    {
+      "type": "input_value",
+      "name": "index",
+	  "check": "Number"
+    }
+  ],
+  "extensions": [
+    "jsonarray_variables"
+  ],
+  "mutator": "variable_entity_input",
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#6D175A",
+  "mcreator": {
+    "toolbox_id": "file_manager_jsonarray",
+	"toolbox_init": [
+      "<value name=\"index\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
+    ],
+    "fields": [
+      "VAR"
+    ],
+	"inputs": [
+	  "index"
+	]
+  }
+}

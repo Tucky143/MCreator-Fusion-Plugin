@@ -1,0 +1,28 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "modifier",
+      "check": "Modifier"
+    },
+    {
+      "type": "input_value",
+      "name": "name",
+      "check": "String"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 350,
+  "mcreator": {
+    "toolbox_id": "azz_attr",
+    "toolbox_init": [
+      "<value name=\"name\"><block type=\"text\"><field name=\"TEXT\">mod:attribute</field></block></value>"
+    ],
+    "inputs": [
+      "modifier",
+      "name"
+    ]
+  }
+}

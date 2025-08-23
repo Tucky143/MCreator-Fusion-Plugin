@@ -1,0 +1,84 @@
+forge-1.18.2:
+  gradle: |
+    repositories {
+        maven {
+            url "https://www.cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    dependencies {
+       compileOnly fg.deobf('curse.maven:bettercombat-forge-639842:4428885')
+       runtimeOnly fg.deobf('curse.maven:bettercombat-forge-639842:4428885')
+    }
+  update_files:
+    - ~
+forge-1.19.2:
+  gradle: |
+    repositories {
+        maven {
+            url "https://www.cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    dependencies {
+       compileOnly fg.deobf('curse.maven:bettercombat-forge-639842:4534619')
+       runtimeOnly fg.deobf('curse.maven:bettercombat-forge-639842:4534619')
+    }
+  update_files:
+    - ~
+forge-1.19.4:
+  gradle: |
+    repositories {
+        maven {
+            url "https://www.cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    dependencies {
+       compileOnly fg.deobf('curse.maven:bettercombat-forge-639842:4534645')
+       runtimeOnly fg.deobf('curse.maven:bettercombat-forge-639842:4534645')
+    }
+  update_files:
+    - ~
+forge-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://www.cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    dependencies {
+       compileOnly fg.deobf('curse.maven:bettercombat-forge-639842:4823303')
+       runtimeOnly fg.deobf('curse.maven:bettercombat-forge-639842:4823303')
+    }
+  update_files:
+    - ~
+
+neoforge-1.21.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://www.cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    dependencies {
+       compileOnly 'curse.maven:better-combat-by-daedelus-639842:6532547'
+       runtimeOnly 'curse.maven:better-combat-by-daedelus-639842:6532547'
+    }
+  update_files:
+    - ~
+
+
+name: "Better Combat"

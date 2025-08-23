@@ -1,0 +1,1 @@
+If this is enabled, wearing this bauble in a curios slot will prevent endermen from attacking you after looking at them.

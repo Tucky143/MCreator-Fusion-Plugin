@@ -1,0 +1,1 @@
+${field$JOBJVAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")}.get(${input$name}).getAsJsonObject()

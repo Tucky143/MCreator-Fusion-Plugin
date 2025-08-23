@@ -1,0 +1,43 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "modifierid",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "name",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "value",
+      "check": "Number"
+    },
+    {
+      "type": "field_data_list_selector",
+      "name": "operation",
+      "datalist": "operation"
+    }
+  ],
+  "inputsInline": true,
+  "colour": 350,
+  "output": "Modifier",
+  "mcreator": {
+    "toolbox_id": "azz_attr",
+    "toolbox_init": [
+      "<value name=\"modifierid\"><block type=\"text\"><field name=\"TEXT\">you can generate random uuid here: www.uuidtools.com/minecraft</field></block></value>",
+      "<value name=\"name\"><block type=\"text\"><field name=\"TEXT\">modifier_name</field></block></value>",
+      "<value name=\"value\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
+    ],
+    "fields": [
+      "operation"
+    ],
+    "inputs": [
+      "modifierid",
+      "name",
+      "value"
+    ]
+  }
+}

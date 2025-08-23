@@ -1,0 +1,1 @@
+This parameter controls the way the model is rotated when the particle renders.

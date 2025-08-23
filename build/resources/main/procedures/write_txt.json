@@ -1,0 +1,43 @@
+{
+  "args0": [
+    {
+      "type": "input_dummy",
+      "name": "var"
+    },
+    {
+      "type": "input_statement",
+      "name": "text"
+    },
+    {
+      "type": "input_value",
+      "name": "appendMode",
+      "check": "Boolean"
+    }
+  ],
+  "extensions": [
+    "file_variables"
+  ],
+  "mutator": "variable_entity_input",
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 270,
+  "mcreator": {
+    "group": "txt",
+    "toolbox_id": "file_manager_actions",
+    "toolbox_init": [
+      "<value name=\"appendMode\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value>"
+    ],
+    "inputs" : [
+     "appendMode"
+    ],
+    "statements": [
+      {
+        "name": "text"
+      }
+    ],
+    "fields": [
+      "VAR"
+    ]
+  }
+}

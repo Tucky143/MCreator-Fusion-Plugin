@@ -1,0 +1,1 @@
+This is the size the particle model will render with.
