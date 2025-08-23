@@ -1,0 +1,3 @@
+file: File
+jsonobject: com.google.gson.JsonObject
+jsonarray: com.google.gson.JsonArray
