@@ -1,0 +1,33 @@
+{
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "name"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "value",
+      "options": [
+        [
+          "true",
+          "true"
+        ],
+        [
+          "false",
+          "false"
+        ]
+      ]
+    }
+  ],
+  "output": "Boolean",
+  "colour": "%{BKY_LOGIC_HUE}",
+  "mcreator": {
+    "toolbox_id": "configdata",
+    "toolbox_init": [
+    ],
+    "fields": [
+      "name",
+      "value"
+    ]
+  }
+}

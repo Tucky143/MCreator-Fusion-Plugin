@@ -1,0 +1,26 @@
+{
+ "args0": [
+    {
+     "type": "field_input",
+     "name": "variable"
+    },
+    {
+     "type": "field_data_list_selector",
+     "name": "config",
+	 "datalist": "config",
+	 "customEntryProviders": "config"
+    }
+],
+   "inputsInline": true,
+   "output": "String",
+   "colour": "%{BKY_TEXTS_HUE}",
+   "mcreator": {
+     "toolbox_id": "configdata",
+     "toolbox_init": [
+],
+  "fields": [
+    "variable",
+    "config"
+   ]
+  }
+}

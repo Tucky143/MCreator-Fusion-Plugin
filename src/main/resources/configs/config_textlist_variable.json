@@ -1,0 +1,29 @@
+{
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "name"
+    }
+  ],
+  "inputsInline": true,
+  "mutator": "text_list_mutator",
+  "output": "String",
+  "colour": "%{BKY_TEXTS_HUE}",
+  "mcreator": {
+    "toolbox_id": "configdata",
+    "toolbox_init": [
+      "<mutation inputs=\"1\"></mutation>"
+    ],
+    "repeating_fields": [
+      {
+        "name": "entry",
+        "field_definition": {
+          "type": "field_input"
+        }
+      }
+    ],
+    "fields": [
+      "name"
+    ]
+  }
+}

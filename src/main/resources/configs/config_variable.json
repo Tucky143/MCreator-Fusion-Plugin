@@ -1,0 +1,32 @@
+{
+  "args0": [
+    {
+      "type": "registry_name",
+      "name": "name"
+    },
+    {
+      "type": "input_value",
+      "name": "value"
+    },
+    {
+      "type": "field_input",
+      "name": "comment"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 280,
+  "mcreator": {
+    "toolbox_id": "configdata",
+    "toolbox_init": [
+    ],
+    "inputs": [
+      "value"
+    ],
+    "fields": [
+      "name",
+      "comment"
+    ]
+  }
+}

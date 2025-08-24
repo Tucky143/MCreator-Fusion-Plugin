@@ -3,6 +3,8 @@ global_templates:
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameJeiPlugin.java"
   - template: jei_recipetype/recipe_registry.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameRecipeTypes.java"
+  - template: jei_recipetype/sized_ingredient.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/util/SizedIngredient.java"
 
 templates:
   - template: jei_recipetype/recipe.java.ftl

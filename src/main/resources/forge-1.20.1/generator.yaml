@@ -13,6 +13,7 @@ java_models:
 
 # gradle task definitions
 gradle:
+  setup_task: eclipse
   run_client: runClient
   run_server: runServer
   export_file: "build/libs/modid-1.0.jar"
@@ -79,6 +80,7 @@ base_templates:
     writer: file
     name: "@RESROOT/META-INF/accesstransformer.cfg"
     condition_any:
+      - ${w.hasElementsOfType('animateditem')}
       - ${w.hasElementsOfType('feature')}
       - "${w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0}"
       - ${w.hasElementsOfType('endbiome')}

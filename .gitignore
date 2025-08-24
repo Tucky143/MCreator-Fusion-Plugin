@@ -19,12 +19,19 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Gradle and build system
+.gradle/
+gradle/
+build/
+gradle.properties
+
+# IntelliJ IDEA project files
+.idea/
+
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
-
-/.gradle/
-/.idea/
-/build/
 /gradle/
-/gradle.properties
+/build/
+/.idea/
+/.gradle/

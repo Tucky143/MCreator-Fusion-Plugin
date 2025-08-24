@@ -1,0 +1,6 @@
+global_templates:
+  - template: elementinits/configs.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameConfigs.java"
+templates:
+  - template: configuration/config.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/configuration/@NAMEConfiguration.java"

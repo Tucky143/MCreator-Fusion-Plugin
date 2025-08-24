@@ -34,12 +34,6 @@ enumExtensions="META-INF/enumextensions.json"
 # Start of user code block mod configuration
 # End of user code block mod configuration
 
-[[mixins]]
-    config = "${settings.getModID()}.mixins.json"
-
-# Start of user code block custom mixins
-# End of user code block custom mixins
-
 [[dependencies.${settings.getModID()}]]
     modId="neoforge"
     type="required"
@@ -80,6 +74,9 @@ enumExtensions="META-INF/enumextensions.json"
     ordering="NONE"
     side="BOTH"
 </#list>
+
+[[mixins]]
+    config="mixin.${modid}.json"
 
 # Start of user code block dependencies configuration
 # End of user code block dependencies configuration

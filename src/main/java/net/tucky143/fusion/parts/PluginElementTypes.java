@@ -24,6 +24,9 @@ public class PluginElementTypes {
     public static ModElementType<?> JEIRECIPE;
     public static ModElementType<?> ANVILRECIPE;
     public static ModElementType<?> JEIINFORMATION;
+    public static ModElementType<?> LOOTMODIFIER;
+    public static ModElementType<?> BLOCKSTATES;
+    public static ModElementType<?> CONFIG;
 
 
     public static void load() {
@@ -86,6 +89,18 @@ public class PluginElementTypes {
 
         JEIINFORMATION = register(
                 new ModElementType<>("jeiinformation", (Character) 'I', JeiInformationGUI::new, JeiInformation.class)
+        );
+
+        LOOTMODIFIER = register(
+                new ModElementType<>("lootmodifier", (Character) 'L', LootModifierGUI::new, LootModifier.class)
+        );
+
+        BLOCKSTATES = register(
+                new ModElementType<>("blockstates", (Character) null, BlockstatesGUI::new, Blockstates.class)
+        );
+
+        CONFIG = register(
+                new ModElementType<>("config", (Character) null, ConfigGUI::new, Config.class)
         );
     }
 
