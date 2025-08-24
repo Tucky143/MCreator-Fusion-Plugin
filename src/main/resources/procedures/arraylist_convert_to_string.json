@@ -1,0 +1,27 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "var",
+      "check": "ArrayList"
+    },
+    {
+      "type": "input_value",
+      "name": "separator",
+      "check": "String"
+    }
+  ],
+  "inputsInline": true,
+  "output": "String",
+  "colour": "#5ba58c",
+  "mcreator": {
+    "toolbox_id": "arraylist_utils",
+    "toolbox_init": [
+      "<value name=\"separator\"><block type=\"text\"><field name=\"TEXT\">,</field></block></value>"
+    ],
+    "inputs": [
+      "var",
+      "separator"
+    ]
+  }
+}

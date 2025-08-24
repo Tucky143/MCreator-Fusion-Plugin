@@ -1,0 +1,33 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "var",
+      "check": "ArrayList"
+    },
+    {
+      "type": "input_value",
+      "name": "index",
+      "check": "Number"
+    },
+    {
+      "type": "field_image",
+      "src": "./res/null.png",
+      "width": "8",
+      "height": "24"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Entity",
+  "colour": "#5b93a5",
+  "mcreator": {
+    "toolbox_id": "arraylist_lists",
+    "toolbox_init": [
+      "<value name=\"index\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
+    ],
+    "inputs": [
+      "index",
+      "var"
+    ]
+  }
+}

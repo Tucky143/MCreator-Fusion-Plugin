@@ -1,0 +1,3 @@
+(
+	${input$fluidstack}.getHoverName().getString()
+)

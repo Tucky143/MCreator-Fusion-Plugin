@@ -1,3 +1,5 @@
 file: File
 jsonobject: com.google.gson.JsonObject
 jsonarray: com.google.gson.JsonArray
+fluidstack: FluidStack
+arraylist: ArrayList

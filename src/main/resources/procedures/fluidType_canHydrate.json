@@ -1,0 +1,28 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "fluidstack",
+      "check": "FluidStack"
+    },
+    {
+      "type": "input_value",
+      "name": "entity",
+      "check": "Entity"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Boolean",
+  "colour": "#5b80a5",
+  "mcreator": {
+    "toolbox_id": "fluid_type",
+    "toolbox_init": [
+      "<value name=\"fluidstack\"><block type=\"fluids_emptyFluidStack\"></block></value>",
+      "<value name=\"entity\"><block type=\"entity_from_deps\"></block></value>"
+    ],
+    "inputs": [
+      "fluidstack",
+      "entity"
+    ]
+  }
+}

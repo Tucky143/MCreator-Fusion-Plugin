@@ -1,0 +1,41 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "var",
+      "check": "ArrayList"
+    },
+    {
+      "type": "input_value",
+      "name": "index",
+      "check": "Number"
+    },
+    {
+      "type": "field_input",
+      "name": "object",
+      "text": "Object"
+    },
+    {
+      "type": "field_input",
+      "name": "default",
+      "text": "null"
+    }
+  ],
+  "inputsInline": true,
+  "output": null,
+  "colour": "#675ba5",
+  "mcreator": {
+    "toolbox_id": "arraylist_lists",
+    "toolbox_init": [
+      "<value name=\"index\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
+    ],
+    "inputs": [
+      "index",
+      "var"
+    ],
+    "fields": [
+      "object",
+      "default"
+    ]
+  }
+}

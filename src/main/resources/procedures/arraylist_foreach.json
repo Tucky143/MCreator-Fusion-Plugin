@@ -1,0 +1,39 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "var",
+      "check": "ArrayList"
+    },
+    {
+      "type": "input_value",
+      "name": "iterator",
+      "check": "ArrayList"
+    },
+    {
+      "type": "input_statement",
+      "name": "foreach"
+    }
+  ],
+  "extensions": [
+    "is_custom_loop"
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#a55ba5",
+  "mcreator": {
+    "toolbox_id": "arraylist_utils",
+    "toolbox_init": [
+      "<value name=\"iterator\"><block deletable=\"false\" movable=\"false\" enabled=\"false\" type=\"arraylist_iterator\"></block></value>"
+    ],
+    "inputs": [
+      "var"
+    ],
+    "statements": [
+      {
+        "name": "foreach"
+      }
+    ]
+  }
+}

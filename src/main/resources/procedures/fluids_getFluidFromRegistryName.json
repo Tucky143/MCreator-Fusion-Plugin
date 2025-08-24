@@ -1,0 +1,21 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "regName",
+      "check": "String"
+    }
+  ],
+  "inputsInline": true,
+  "output": "FluidStack",
+  "colour": "#00c8d5",
+  "mcreator": {
+    "toolbox_id": "fluids",
+    "toolbox_init": [
+      "<value name=\"regName\"><block type=\"text\"><field name=\"TEXT\">minecraft:water</field></block></value>"
+    ],
+    "inputs": [
+      "regName"
+    ]
+  }
+}

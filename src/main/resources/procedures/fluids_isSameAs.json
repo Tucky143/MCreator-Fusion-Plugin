@@ -1,0 +1,24 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "fluidstack1",
+      "check": "FluidStack"
+    },
+    {
+      "type": "input_value",
+      "name": "fluidstack2",
+      "check": "FluidStack"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Boolean",
+  "colour": "#00c8d5",
+  "mcreator": {
+    "toolbox_id": "logicoperations",
+    "inputs": [
+      "fluidstack1",
+      "fluidstack2"
+    ]
+  }
+}

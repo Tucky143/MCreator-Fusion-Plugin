@@ -9,12 +9,17 @@ import net.mcreator.plugin.events.PreGeneratorsLoadingEvent;
 import net.mcreator.plugin.events.WorkspaceBuildStartedEvent;
 import net.mcreator.plugin.events.ui.ModElementGUIEvent;
 import net.mcreator.plugin.events.workspace.MCreatorLoadedEvent;
+import net.mcreator.ui.MCreator;
+import net.mcreator.ui.action.BasicAction;
 import net.mcreator.ui.blockly.BlocklyEditorType;
+import net.mcreator.ui.init.L10N;
+import net.mcreator.ui.init.UIRES;
 import net.mcreator.ui.modgui.BiomeGUI;
 import net.mcreator.ui.modgui.ModElementGUI;
 import net.tucky143.fusion.parts.PluginActions;
 import net.tucky143.fusion.parts.PluginElementTypes;
 import net.tucky143.fusion.parts.PluginEventTriggers;
+import net.tucky143.fusion.ui.dialogs.AddOtherTagsDialog;
 import net.tucky143.fusion.ui.modgui.EndBiomeGUI;
 
 import javax.swing.*;
@@ -88,5 +93,29 @@ public class Launcher extends JavaPlugin {
 		});
 
 		LOG.info("Plugin was loaded");
+
+        //TAGS+ INIT
+
+        addListener(MCreatorLoadedEvent.class, event -> SwingUtilities.invokeLater(() -> {
+            MCreator mcreator = event.getMCreator();
+            if (mcreator != null) { // Ensure MCreator is not null
+                // Add an action for opening the custom Tags+ dialog (AddOtherTagsDialog)
+                BasicAction openTagsDialogAction = new BasicAction(
+                        mcreator.getActionRegistry(),
+                        L10N.t("menu.tags.open_dialog"), // Localized menu item name
+                        e -> AddOtherTagsDialog.open(mcreator) // Open the AddOtherTagsDialog
+                );
+                openTagsDialogAction.setIcon(UIRES.get("16px.injecttags"));
+
+                JMenuBar menuBar = mcreator.getMainMenuBar();
+                if (menuBar != null) {
+                    mcreator.getToolBar().addToLeftToolbar(openTagsDialogAction);
+                    openTagsDialogAction.setTooltip("Add Additional Tags...");
+                    menuBar.revalidate();
+                    menuBar.repaint();
+                }
+            }
+        }));
+
 	}
 }

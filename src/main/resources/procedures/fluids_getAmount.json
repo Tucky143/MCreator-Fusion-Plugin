@@ -1,0 +1,21 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "fluidstack",
+      "check": "FluidStack"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "toolbox_id": "fluids",
+    "toolbox_init": [
+      "<value name=\"fluidstack\"><block type=\"fluids_emptyFluidStack\"></block></value>"
+    ],
+    "inputs": [
+      "fluidstack"
+    ]
+  }
+}

@@ -1,42 +1,73 @@
 ---
+neoforge-1.21.5:
+  gradle: |
+      repositories {
+       maven {
+           url = 'https://maven.kosmx.dev/'
+       }
+      }
+
+       dependencies {
+         implementation 'dev.kosmx.player-anim:player-animation-lib-forge:2.0.2+1.21.5'
+       }
+
+  update_files:
+    - ~
+
+neoforge-1.21.4:
+  gradle: |
+      repositories {
+       maven {
+           url = 'https://maven.kosmx.dev/'
+       }
+      }
+
+       dependencies {
+         implementation 'dev.kosmx.player-anim:player-animation-lib-forge:2.0.2+1.21.4'
+       }
+
+  update_files:
+    - ~
+
 neoforge-1.21.1:
   gradle: |
-    repositories {
-     maven {
-         url = 'https://maven.kosmx.dev/'
-     }
-    }
-    
-     dependencies {
-       implementation 'dev.kosmx.player-anim:player-animation-lib-forge:2.0.1+1.21.1'
-     }
+      repositories {
+       maven {
+           url = 'https://maven.kosmx.dev/'
+       }
+      }
+
+       dependencies {
+         implementation 'dev.kosmx.player-anim:player-animation-lib-forge:2.0.1+1.21.1'
+       }
 
   update_files:
     - ~
 
 forge-1.20.1:
   gradle: |
-    repositories {
-     maven {
-         url = 'https://maven.kosmx.dev/'
-     }
-    }
-    
-     dependencies {
-       implementation fg.deobf('dev.kosmx.player-anim:player-animation-lib-forge:1.0.2-rc1+1.20')
-     }
-    minecraft {
-      runs {
-        client {    
-          property 'mixin.env.remapRefMap', 'true'
-          property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-        }
-        server {
-             property 'mixin.env.remapRefMap', 'true'
-             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-        }
+      minecraft {
+        runs {
+         client {    
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+             }
+              server {
+               property 'mixin.env.remapRefMap', 'true'
+               property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+             }
+            }
+           }
+
+      repositories {
+       maven {
+           url = 'https://maven.kosmx.dev/'
+       }
       }
-    }
+
+       dependencies {
+         implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:1.0.2-rc1+1.20")
+       }
 
   update_files:
     - ~

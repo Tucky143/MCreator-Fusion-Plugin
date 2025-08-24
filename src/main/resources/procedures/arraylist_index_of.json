@@ -1,0 +1,23 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "var",
+      "check": "ArrayList"
+    },
+    {
+      "type": "input_value",
+      "name": "value"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Number",
+  "colour": "#5b67a5",
+  "mcreator": {
+    "toolbox_id": "arraylist_utils",
+    "inputs": [
+      "value",
+      "var"
+    ]
+  }
+}

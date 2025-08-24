@@ -1,0 +1,28 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "amount",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "var",
+      "check": "ArrayList"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#a55ba5",
+  "mcreator": {
+    "toolbox_id": "arraylist_utils",
+    "toolbox_init": [
+      "<value name=\"amount\"><block type=\"math_number\"><field name=\"NUM\">10</field></block></value>"
+    ],
+    "inputs": [
+      "amount",
+      "var"
+    ]
+  }
+}

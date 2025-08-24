@@ -1,0 +1,21 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "bucket",
+      "check": "MCItem"
+    }
+  ],
+  "inputsInline": true,
+  "output": "FluidStack",
+  "colour": "#00c8d5",
+  "mcreator": {
+    "toolbox_id": "fluids",
+    "toolbox_init": [
+      "<value name=\"bucket\"><block type=\"mcitem_all\"><field name=\"value\"></field></block></value>"
+    ],
+    "inputs": [
+      "bucket"
+    ]
+  }
+}

@@ -2,3 +2,5 @@ file: File
 jsonobject: com.google.gson.JsonObject
 jsonarray: com.google.gson.JsonArray
 tooltip: List<Component>
+fluidstack: FluidStack
+arraylist: ArrayList

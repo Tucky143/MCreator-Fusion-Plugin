@@ -1,0 +1,29 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "fluidstack",
+      "check": "FluidStack"
+    },
+    {
+      "type": "input_value",
+      "name": "amount",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#00c8d5",
+  "mcreator": {
+    "toolbox_id": "fluids",
+    "toolbox_init": [
+      "<value name=\"fluidstack\"><block type=\"fluids_emptyFluidStack\"></block></value>",
+      "<value name=\"amount\"><block type=\"math_number\"><field name=\"NUM\">100</field></block></value>"
+    ],
+    "inputs": [
+      "fluidstack",
+      "amount"
+    ]
+  }
+}
