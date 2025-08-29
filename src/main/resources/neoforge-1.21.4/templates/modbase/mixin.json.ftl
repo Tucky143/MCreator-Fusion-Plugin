@@ -18,7 +18,7 @@
 {
   "required": true,
   "package": "${package}.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     <#list mixins as mixin>"${mixin}"<#sep>,</#list>
   ],

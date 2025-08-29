@@ -25,6 +25,7 @@
             "${string}"<#sep>,
         </#list>
     ],
+    </#if>
   <#if w.getWorkspace().getModElementByName(data.recipetype).getGeneratableElement().enableIntList>
     "integers": [
         <#list data.integers as integer>

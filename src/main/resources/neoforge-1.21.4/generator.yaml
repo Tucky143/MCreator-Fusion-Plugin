@@ -88,11 +88,11 @@ base_templates:
   - template: elementinits/javamodels.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameModels.java"
     condition: hasJavaModels()
-      - "${w.hasElementsOfType('endbiome')}"
   - template: modbase/enumextensions.json.ftl
     writer: json
     name: "@RESROOT/META-INF/enumextensions.json"
     condition_any:
+      - "${w.hasElementsOfType('endbiome')}"
       - "${w.getGElementsOfType('livingentity')?filter(e -> e.mobBehaviourType == \"Raider\")?size != 0}"
   - template: modbase/mixin.json.ftl
     writer: json

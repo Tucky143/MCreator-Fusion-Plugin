@@ -76,7 +76,7 @@ enumExtensions="META-INF/enumextensions.json"
 </#list>
 
 [[mixins]]
-    config="mixin.${modid}.json"
+    config="${modid}.mixins.json"
 
 # Start of user code block dependencies configuration
 # End of user code block dependencies configuration
