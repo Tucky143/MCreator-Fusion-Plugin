@@ -1,1 +1,0 @@
-Esta es la animación que se reproducirá mientras la entidad se encuentre en estado inactivo, y ninguna otra animación esté activa.

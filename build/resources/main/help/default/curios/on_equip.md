@@ -1,1 +1,0 @@
-This procedure executes once after the bauble is equipped in a curios slot.

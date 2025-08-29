@@ -1,1 +1,0 @@
-Ten parametr określa liczbę ticków, przez które byt pozostanie martwa po śmierci.

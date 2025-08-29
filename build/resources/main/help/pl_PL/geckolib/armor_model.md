@@ -1,1 +1,0 @@
-Nazwa modelu i animacji json GeckoLib.

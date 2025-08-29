@@ -1,1 +1,0 @@
-Lorsque ce paramètre est activé, il remplace la position de la hauteur des yeux de l'entité de la hitbox par la valeur spécifiée.

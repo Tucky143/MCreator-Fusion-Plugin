@@ -1,1 +1,0 @@
-tooltip.add(new StringTextComponent(${input$tooltiptext}));

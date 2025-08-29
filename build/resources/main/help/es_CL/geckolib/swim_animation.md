@@ -1,1 +1,0 @@
-Esta animación sustituirá a la animación de reposo mientras la entidad esté en el agua.

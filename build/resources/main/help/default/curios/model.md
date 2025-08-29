@@ -1,1 +1,0 @@
-If this option is enabled, the bauble will render a custom java model while equipped.

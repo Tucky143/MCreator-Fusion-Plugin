@@ -1,1 +1,0 @@
-Il s'agit de l'animation qui sera jouée lorsque l'entité est dans un état d'inactivité et qu'aucune autre animation n'est active.

@@ -1,1 +1,0 @@
-Esta animación se reproducirá una vez cada vez que la entidad realice un ataque.

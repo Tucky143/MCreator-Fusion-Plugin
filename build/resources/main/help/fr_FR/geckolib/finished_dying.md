@@ -1,1 +1,0 @@
-Cette procédure est déclenchée lorsque l'entité atteint la fin de son temps de mort.

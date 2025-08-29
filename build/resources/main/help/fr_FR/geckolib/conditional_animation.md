@@ -1,1 +1,0 @@
-Si un nom d'animation valide est renvoyé, cette animation sera jouée à l'entité.

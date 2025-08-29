@@ -1,2 +1,0 @@
-Este debe ser el nombre de la animación que quieres que reproduzca este campo específico.
-Por ejemplo, una entrada válida puede ser animation.example.idle o si no usaste eso, simplemente escribir idle funcionaría de la misma manera.

@@ -1,1 +1,0 @@
-La activación de este parámetro impide que el modelo de entidad gire hacia un lado cuando la entidad muere.

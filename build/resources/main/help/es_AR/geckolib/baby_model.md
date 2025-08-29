@@ -1,1 +1,0 @@
-Este parámetro controla la escala que tendrá el modelo de la entidad si es el hijo engendrado utilizando huevos de engendrar o mediante la reproducción de dos entidades juntas.

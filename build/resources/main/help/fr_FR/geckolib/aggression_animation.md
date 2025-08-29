@@ -1,1 +1,0 @@
-Cette animation sera jouée si l'entité est agressive envers une autre entité et remplacera l'animation de marche.

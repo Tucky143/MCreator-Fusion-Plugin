@@ -1,1 +1,0 @@
-Tekstura modelu zbroi GeckoLib.

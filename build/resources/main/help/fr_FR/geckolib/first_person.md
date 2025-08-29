@@ -1,2 +1,0 @@
-Lorsque cette option est cochée, les groupes de modèles spécifiés ci-dessous seront remplacés par les bras du joueur.
-Ces bras seront uniquement rendus à l'écran à la première personne et ne feront pas partie du modèle.

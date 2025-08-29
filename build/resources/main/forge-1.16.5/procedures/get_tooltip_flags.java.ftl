@@ -1,1 +1,0 @@
-(((ItemTooltipEvent) event).getFlags().isAdvanced())

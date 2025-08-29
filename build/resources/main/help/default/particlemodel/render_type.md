@@ -1,1 +1,0 @@
-This controls the way the custom model will render.

@@ -1,2 +1,0 @@
-Cuando esta opción está marcada, los grupos de modelos especificados a continuación serán sustituidos por brazos de jugador.
-Estos brazos sólo se renderizarán en la pantalla en primera persona y no formarán parte del modelo.

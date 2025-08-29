@@ -1,1 +1,0 @@
-This animation will play while the entity has sneaking set to true, which can be done through the sneaking procedure block.

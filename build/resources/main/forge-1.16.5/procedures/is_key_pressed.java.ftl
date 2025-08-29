@@ -1,1 +1,0 @@
-(Screen.has${field$key}Down())

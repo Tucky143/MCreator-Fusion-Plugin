@@ -1,1 +1,0 @@
-_event.removeModifier(BuiltInRegistries.ATTRIBUTE.getHolder(new ResourceLocation(${input$name})).get(), ${input$modifier});

@@ -1,1 +1,0 @@
-The java model that will render while the bauble is equipped.

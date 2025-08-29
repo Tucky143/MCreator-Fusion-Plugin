@@ -1,1 +1,0 @@
-La textura del modelo de armadura GeckoLib.

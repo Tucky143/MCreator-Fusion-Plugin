@@ -1,4 +1,0 @@
-templates:
-  - template: placeholder.ftl
-    condition: ${false == true}
-    name: ""

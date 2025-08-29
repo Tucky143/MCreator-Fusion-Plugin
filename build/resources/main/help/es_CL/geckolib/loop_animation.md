@@ -1,1 +1,0 @@
-Mientras el valor devuelto sea verdadero, las animaciones reproducidas a través de la condición de animación devuelta o los procedimientos de animación se reproducirán en bucle.

@@ -1,1 +1,0 @@
-This animation will replace the idle animation while the entity is in water.

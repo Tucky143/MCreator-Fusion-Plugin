@@ -1,1 +1,0 @@
-Esta animación se reproducirá mientras la entidad tenga sneaking configurado a true, lo que puede hacerse a través del bloque de procedimiento sneaking.

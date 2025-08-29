@@ -1,1 +1,0 @@
-To jest animacja, która będzie odtwarzana, gdy byt jest w stanie bezczynności i żadna inna animacja nie jest aktywna.

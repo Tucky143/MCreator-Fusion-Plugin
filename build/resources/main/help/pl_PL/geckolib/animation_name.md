@@ -1,2 +1,0 @@
-To powinna być nazwa animacji, którą chcesz odtworzyć w tym konkretnym pol
-Na przykład poprawnym wkładem może być animation.example.idle lub, jeśli go nie użyłeś, samo wpisanie idle zadziałałoby w ten sam sposób.

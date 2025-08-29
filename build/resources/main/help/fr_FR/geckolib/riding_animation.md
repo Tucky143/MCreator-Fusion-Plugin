@@ -1,1 +1,0 @@
-Cette animation remplacera l'animation de marche si l'entité est chevauchée.

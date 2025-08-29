@@ -1,1 +1,0 @@
-Kiedy ten parametr jest włączony, nadpisze on pozycję hitboxa na wysokości oczu bytu do określonej wartości.

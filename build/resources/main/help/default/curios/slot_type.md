@@ -1,1 +1,0 @@
-The curios slot type that this bauble can go into.

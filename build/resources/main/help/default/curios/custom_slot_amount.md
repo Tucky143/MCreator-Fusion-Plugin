@@ -1,1 +1,0 @@
-This determines how many of this type of slot will be added to the curios slots menu.

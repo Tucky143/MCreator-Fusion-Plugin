@@ -1,1 +1,0 @@
-Si está marcada, las animaciones de armadura sólo se reproducirán mientras se lleve un conjunto completo de esta armadura.

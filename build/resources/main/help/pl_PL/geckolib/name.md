@@ -1,1 +1,0 @@
-Nazwa plików json GeckoLib.

@@ -1,2 +1,0 @@
-Ta animacja będzie odtwarzana, podczas lotu bytu, i zatrzyma się, gdy ten wróci na ziemię.
-Nie powinieneś tego używać, jeśli twój byt nie jest przeznaczony do latania, ponieważ uniemożliwi to odtwarzanie animacji chodzenia w powietrzu.

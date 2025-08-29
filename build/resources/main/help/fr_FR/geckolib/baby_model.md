@@ -1,1 +1,0 @@
-Ce paramètre contrôle l'échelle que le modèle de l'entité aura s'il s'agit de l'enfant engendré à l'aide d'œufs de reproduction ou par la reproduction de deux entités ensemble.
