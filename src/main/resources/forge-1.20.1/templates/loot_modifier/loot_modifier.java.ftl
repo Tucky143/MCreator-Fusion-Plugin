@@ -13,7 +13,7 @@ import net.minecraftforge.common.loot.LootModifier;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = ${JavaModName}.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ${JavaModName}LootModifier {
 
     public static class ${JavaModName}LootTableModifier extends LootModifier {

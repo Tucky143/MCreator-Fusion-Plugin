@@ -1,0 +1,51 @@
+{
+  "args0": [
+    {
+      "type": "field_data_list_selector",
+      "name": "recipe",
+      "datalist": "recipes",
+      "customEntryProviders": "jeirecipetype"
+    },
+    {
+      "type": "input_value",
+      "name": "_placeholder",
+      "check": "MCItem"
+    },
+    {
+      "type": "input_statement",
+      "name": "foreach"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "mutator": "item_list_mutator",
+  "colour": 350,
+  "mcreator": {
+    "toolbox_id": "just_enough_recipes",
+    "toolbox_init": [
+      "<value name=\"_placeholder\"><block deletable=\"false\" movable=\"false\" enabled=\"false\" type=\"recipe_result\"></block></value>",
+      "<mutation inputs=\"1\"></mutation>"
+    ],
+    "repeating_inputs": [
+      "entry"
+    ],
+    "statements": [
+      {
+        "name": "foreach"
+      }
+    ],
+    "fields": [
+      "recipe"
+    ],
+    "dependencies": [
+      {
+        "name": "world",
+        "type": "world"
+      }
+    ],
+    "required_apis": [
+      "jei"
+    ]
+  }
+}

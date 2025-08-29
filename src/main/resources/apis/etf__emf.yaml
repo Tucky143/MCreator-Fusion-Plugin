@@ -1,0 +1,19 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+       modImplementation "curse.maven:entity-texture-features-fabric-568563:5079848"
+       modImplementation "curse.maven:entity-model-features-844662:5039264"
+    }
+  update_files:
+    - ~
+name: "ETF & EMF"

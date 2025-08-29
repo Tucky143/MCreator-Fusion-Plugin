@@ -1,0 +1,28 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.terraformersmc.com/" }
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.isxander.dev/releases" }
+        maven { url "https://api.modrinth.com/maven" }
+    }
+
+    dependencies {
+        modImplementation "maven.modrinth:sodium:mc1.20-0.4.10"
+        modImplementation "maven.modrinth:uXXizFIs:unerR5MN"
+        modImplementation "curse.maven:lithium-360438:4765724"
+        modImplementation "curse.maven:lazydfu-433518:3821870"
+        modImplementation "com.github.tr7zw:EntityCulling:1.6.2-1.20.2"
+        modImplementation "curse.maven:starlight-521783:4572096"
+    }
+  update_files:
+    - ~
+name: "PerfMods"

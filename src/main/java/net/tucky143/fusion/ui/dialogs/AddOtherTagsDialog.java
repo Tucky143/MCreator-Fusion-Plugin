@@ -9,15 +9,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 import net.mcreator.minecraft.TagType;
+import net.mcreator.plugin.events.WorkspaceBuildStartedEvent;
+import net.mcreator.plugin.events.workspace.MCreatorLoadedEvent;
+import net.mcreator.ui.action.BasicAction;
 import net.mcreator.ui.component.util.PanelUtils;
 import net.mcreator.ui.dialogs.MCreatorDialog;
 import net.mcreator.ui.init.L10N;
@@ -259,5 +256,26 @@ public class AddOtherTagsDialog {
 			}
 		};
 	}
+    
+    public static void init(MCreatorLoadedEvent event){
+        MCreator mcreator = event.getMCreator();
+        if (mcreator != null) { // Ensure MCreator is not null
+            // Add an action for opening the custom Tags+ dialog (AddOtherTagsDialog)
+            BasicAction openTagsDialogAction = new BasicAction(
+                    mcreator.getActionRegistry(),
+                    L10N.t("menu.tags.open_dialog"), // Localized menu item name
+                    e -> AddOtherTagsDialog.open(mcreator) // Open the AddOtherTagsDialog
+            );
+            openTagsDialogAction.setIcon(UIRES.get("16px.injecttags"));
+
+            JMenuBar menuBar = mcreator.getMainMenuBar();
+            if (menuBar != null) {
+                mcreator.getToolBar().addToLeftToolbar(openTagsDialogAction);
+                openTagsDialogAction.setTooltip("Add Additional Tags...");
+                menuBar.revalidate();
+                menuBar.repaint();
+            }
+        }
+    }
 
 }

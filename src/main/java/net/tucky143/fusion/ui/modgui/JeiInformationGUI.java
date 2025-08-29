@@ -44,11 +44,11 @@ public class JeiInformationGUI extends ModElementGUI<JeiInformation> {
         mainPanel.add(information);
 
         pane1.add(PanelUtils.totalCenterInPanel(mainPanel));
-        addPage(pane1);
+        addPage(pane1).lazyValidate(() -> validatePage());
 
     }
 
-    protected AggregatedValidationResult validatePage(int page) {
+    protected AggregatedValidationResult validatePage() {
         if (!mcreator.getWorkspaceSettings().getDependencies().contains("jei"))
             return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jei.needs_api", new Object[0]));
         if (items.getListElements().isEmpty())

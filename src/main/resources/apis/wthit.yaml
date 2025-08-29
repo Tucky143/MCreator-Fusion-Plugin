@@ -1,0 +1,19 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+         modImplementation "curse.maven:wthit-440979:5109480"
+         modImplementation "curse.maven:badpackets-615134:4784394"
+    }
+  update_files:
+    - ~
+name: "WTHIT"

@@ -1,0 +1,18 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+       modImplementation "curse.maven:emi-580555:5118168"
+    }
+  update_files:
+    - ~
+name: "EMI (Requires JEI)"

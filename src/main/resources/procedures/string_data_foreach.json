@@ -1,0 +1,40 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "_placeholder",
+      "check": "MCItem"
+    },
+    {
+      "type": "input_value",
+      "name": "_placeholder2",
+      "check": "String"
+    },
+    {
+      "type": "input_statement",
+      "name": "foreach"
+    }
+  ],
+  "extensions": [
+    "is_custom_loop"
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "%{BKY_TEXTS_HUE}",
+  "mcreator": {
+    "toolbox_id": "just_enough_recipes",
+    "toolbox_init": [
+      "<value name=\"_placeholder\"><block deletable=\"false\" movable=\"false\" enabled=\"false\" type=\"recipe_result\"></block></value>",
+      "<value name=\"_placeholder2\"><block deletable=\"false\" movable=\"false\" enabled=\"false\" type=\"string_iterator\"></block></value>"
+    ],
+    "statements": [
+      {
+        "name": "foreach"
+      }
+    ],
+    "required_apis": [
+      "jei"
+    ]
+  }
+}

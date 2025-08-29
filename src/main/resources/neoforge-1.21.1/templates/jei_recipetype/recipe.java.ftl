@@ -7,10 +7,22 @@ import javax.annotation.Nullable;
 public class ${name}Recipe implements Recipe<RecipeInput> {
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
+    <#if data.enableIntList>
+    private final List<Integer> integers;
+    </#if>
+    <#if data.enableIntList>
+    private final List<String> strings;
+    </#if>
 
-    public ${name}Recipe(ItemStack output, NonNullList<Ingredient> recipeItems) {
+    public ${name}Recipe(ItemStack output, NonNullList<Ingredient> recipeItems<#if data.enableIntList>, List<Integer> integers</#if><#if data.enableStringList>, List<String> strings</#if>) {
         this.output = output;
         this.recipeItems = recipeItems;
+        <#if data.enableIntList>
+            this.integers = integers;
+        </#if>
+        <#if data.enableStringList>
+            this.strings = strings;
+        </#if>
     }
 
     @Override
@@ -21,6 +33,18 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
 
         return false;
     }
+
+    <#if data.enableIntList>
+    public List<Integer> integers() {
+        return this.integers;
+    }
+    </#if>
+
+    <#if data.enableStringList>
+    public List<String> strings() {
+        return this.strings;
+    }
+    </#if>
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -78,6 +102,12 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
                                 DataResult::success
                             )
                             .forGetter(recipe -> recipe.recipeItems)
+                        <#if data.enableIntList>,
+                            Codec.INT.listOf().fieldOf("integers").forGetter(recipe -> recipe.integers)
+                        </#if>
+                        <#if data.enableStringList>,
+                            Codec.STRING.listOf().fieldOf("strings").forGetter(recipe -> recipe.strings)
+                        </#if>
                     )
                     .apply(builder, ${name}Recipe::new)
         );
@@ -96,7 +126,15 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
         private static ${name}Recipe fromNetwork(RegistryFriendlyByteBuf buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readVarInt(), Ingredient.EMPTY);
             inputs.replaceAll(ingredients -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
-            return new ${name}Recipe(ItemStack.STREAM_CODEC.decode(buf), inputs);
+            <#if data.enableIntList>
+            List<Integer> numbers = NonNullList.withSize(buf.readVarInt(), 0);
+            numbers.replaceAll(num -> buf.readVarInt());
+            </#if>
+            <#if data.enableStringList>
+            List<String> strings = NonNullList.withSize(buf.readVarInt(), "");
+            strings.replaceAll(string -> buf.readUtf());
+            </#if>
+            return new ${name}Recipe(ItemStack.STREAM_CODEC.decode(buf), inputs<#if data.enableIntList>, numbers</#if><#if data.enableStringList>, strings</#if>);
         }
 
         private static void toNetwork(RegistryFriendlyByteBuf buf, ${name}Recipe recipe) {
@@ -107,6 +145,18 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
                 else
                     Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ing);
             }
+            <#if data.enableIntList>
+            buf.writeVarInt(recipe.integers().size());
+            for (Integer num : recipe.integers()) {
+            	buf.writeVarInt(num);
+            }
+            </#if>
+            <#if data.enableStringList>
+            buf.writeVarInt(recipe.strings().size());
+            for (String string : recipe.strings()) {
+            	buf.writeUtf(string);
+            }
+            </#if>
             ItemStack.STREAM_CODEC.encode(buf, recipe.getResultItem(null));
         }
     }

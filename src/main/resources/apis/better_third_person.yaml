@@ -1,0 +1,18 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+      modImplementation "curse.maven:better-third-person-435044:4596636"
+    }
+  update_files:
+    - ~
+name: "Better Third Person"

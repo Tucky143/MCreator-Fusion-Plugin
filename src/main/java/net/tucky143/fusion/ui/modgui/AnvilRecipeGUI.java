@@ -2,6 +2,7 @@ package net.tucky143.fusion.ui.modgui;
 
 import net.mcreator.minecraft.ElementUtil;
 import net.mcreator.ui.MCreator;
+import net.mcreator.ui.MCreatorApplication;
 import net.mcreator.ui.component.util.PanelUtils;
 import net.mcreator.ui.help.HelpUtils;
 import net.mcreator.ui.init.L10N;
@@ -65,12 +66,8 @@ public class AnvilRecipeGUI extends ModElementGUI<AnvilRecipe> {
         page1group.addValidationElement(output);
 
         pane1.add(PanelUtils.totalCenterInPanel(mainPanel));
-        addPage(pane1);
+        addPage(pane1).validate(page1group);
 
-    }
-
-    protected AggregatedValidationResult validatePage(int page) {
-        return new AggregatedValidationResult(new ValidationGroup[]{this.page1group});
     }
 
     public void openInEditingMode(AnvilRecipe recipe) {

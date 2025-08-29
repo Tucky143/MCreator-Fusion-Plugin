@@ -1,0 +1,15 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url = "https://api.modrinth.com/maven"
+        }
+    }
+    
+    dependencies {
+     modImplementation "maven.modrinth:mOgUt4GM:RTFDnTKf"
+    }
+  update_files:
+    - ~
+name: "Mod Menu"

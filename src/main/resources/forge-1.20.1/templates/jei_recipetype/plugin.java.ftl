@@ -5,7 +5,7 @@ package ${package}.init;
 <#compress>
 @JeiPlugin
 public class ${JavaModName}JeiPlugin implements IModPlugin {
-    <#list jeirecipetypes as type>
+    <#list legacyjeirecipetypes as type>
         public static mezz.jei.api.recipe.RecipeType<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}_Type =
             new mezz.jei.api.recipe.RecipeType<>(${type.getModElement().getName()}RecipeCategory.UID, ${type.getModElement().getName()}Recipe.class);
     </#list>
@@ -17,7 +17,7 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
-	    <#list jeirecipetypes as type>
+	    <#list legacyjeirecipetypes as type>
 	        registration.addRecipeCategories(new
 	            ${type.getModElement().getName()}RecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 	    </#list>
@@ -27,7 +27,7 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 	public void registerRecipes(IRecipeRegistration registration) {
 		RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
 
-		<#list jeirecipetypes as type>
+		<#list legacyjeirecipetypes as type>
             List<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}Recipes = recipeManager.getAllRecipesFor(${type.getModElement().getName()}Recipe.Type.INSTANCE);
             registration.addRecipes(${type.getModElement().getName()}_Type, ${type.getModElement().getName()}Recipes);
 		</#list>
@@ -35,7 +35,7 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-	    <#list jeirecipetypes as type>
+	    <#list legacyjeirecipetypes as type>
 	        <#if type.enableCraftingtable>
 	            <#list type.craftingtables as block>
 	                registration.addRecipeCatalyst(new ItemStack(${mappedMCItemToItem(block)}), ${type.getModElement().getName()}_Type);
@@ -44,4 +44,12 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 	    </#list>
 	}
 
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        <#list legacyjeirecipetypes as type>
+            <#if type.clickableArea>
+                registration.addRecipeClickArea(${type.caGui}Screen.class, ${type.caX}, ${type.caY}, ${type.caWidth}, ${type.caHeight}, ${type.getModElement().getName()}_Type);
+            </#if>
+        </#list>
+    }
 }</#compress>

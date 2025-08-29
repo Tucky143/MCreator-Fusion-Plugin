@@ -23,7 +23,6 @@ import net.mcreator.util.StringUtils;
 import net.mcreator.workspace.elements.ModElement;
 import net.tucky143.fusion.elements.JeiRecipeType;
 import net.tucky143.fusion.parts.JeiSlotList;
-import net.tucky143.fusion.parts.WTextureComboBoxRenderer;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -43,6 +42,8 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     private JeiSlotList slotList;
     private JSpinner width;
     private JSpinner height;
+    private JCheckBox enableIntList;
+    private JCheckBox enableStringList;
     private final ValidationGroup page1group = new ValidationGroup();
 
     public JeiRecipeTypeGUI(MCreator mcreator, ModElement modElement, boolean editingMode) {
@@ -56,6 +57,8 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         width = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
         height = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
         enableCraftingtable = L10N.checkbox("elementgui.common.enable", new Object[0]);
+        enableIntList = L10N.checkbox("elementgui.common.enable", new Object[0]);
+        enableStringList = L10N.checkbox("elementgui.common.enable", new Object[0]);
         this.initGUI();
         super.finalizeGUI();
     }
@@ -100,9 +103,26 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         mainPanel.add(subPanel2);
         ComponentUtils.deriveFont(title, 16.0F);
 
+        JPanel advancedPanel = new JPanel(new GridLayout(2, 2, 0, 2));
+        advancedPanel.setOpaque(false);
+        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/intlist"), L10N.label("elementgui.jeirecipetype.intlist", new Object[0])));
+        advancedPanel.add(enableIntList);
+        enableIntList.setOpaque(false);
+        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/stringlist"), L10N.label("elementgui.jeirecipetype.stringlist", new Object[0])));
+        advancedPanel.add(enableStringList);
+        enableStringList.setOpaque(false);
+
+        JPanel advancedSubPanel = new JPanel(new BorderLayout());
+        advancedSubPanel.setOpaque(false);
+        advancedSubPanel.add(PanelUtils.centerInPanel(advancedPanel));
+
+        JPanel nwPanel = new JPanel(new BorderLayout());
+        nwPanel.setOpaque(false);
+        nwPanel.add(PanelUtils.centerAndEastElement(mainPanel, advancedSubPanel));
+
         JComponent mainEditor = PanelUtils.northAndCenterElement(HelpUtils.wrapWithHelpButton(this.withEntry("jei/slots"), L10N.label("elementgui.jeirecipetype.slots", new Object[0])), this.slotList);
         mainEditor.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        pane1.add(PanelUtils.northAndCenterElement(PanelUtils.join(0, new Component[]{mainPanel}), mainEditor));
+        pane1.add(PanelUtils.northAndCenterElement(PanelUtils.join(0, new Component[]{nwPanel}), mainEditor));
 
         this.title.setValidator(new TextFieldValidator(this.title, L10N.t("elementgui.jeirecipetype.recipetype_needs_title", new Object[0])));
         this.title.enableRealtimeValidation();
@@ -117,7 +137,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
             craftingtables.setEnabled(enableCraftingtable.isSelected());
         }
 
-        addPage(L10N.t("elementgui.common.page_properties", new Object[0]), pane1);
+        addPage(L10N.t("elementgui.common.page_properties", new Object[0]), pane1).lazyValidate(() -> validatePage());
     }
 
     public void reloadDataLists() {
@@ -125,7 +145,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         slotList.reloadDataLists();
     }
 
-    protected AggregatedValidationResult validatePage(int page) {
+    protected AggregatedValidationResult validatePage() {
         if (!mcreator.getWorkspaceSettings().getDependencies().contains("jei"))
             return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jei.needs_api", new Object[0]));
         else if (textureSelector.getSelectedItem().equals("")) {
@@ -139,6 +159,8 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         title.setText(jeiRecipe.title);
         icon.setBlock(jeiRecipe.icon);
         enableCraftingtable.setSelected(jeiRecipe.enableCraftingtable);
+        enableIntList.setSelected(jeiRecipe.enableIntList);
+        enableStringList.setSelected(jeiRecipe.enableStringList);
         textureSelector.setSelectedItem(jeiRecipe.textureSelector);
         slotList.setEntries(jeiRecipe.slotList);
         width.setValue(jeiRecipe.width);
@@ -158,6 +180,8 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         recipe.icon = icon.getBlock();
         recipe.craftingtables = craftingtables.getListElements();
         recipe.enableCraftingtable = enableCraftingtable.isSelected();
+        recipe.enableIntList = enableIntList.isSelected();
+        recipe.enableStringList = enableStringList.isSelected();
         recipe.title = title.getText();
         recipe.slotList = slotList.getEntries();
         recipe.width = (int) width.getValue();

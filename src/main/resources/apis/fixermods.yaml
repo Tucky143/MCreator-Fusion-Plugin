@@ -1,0 +1,39 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "https://maven.terraformersmc.com/" }
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.isxander.dev/releases" }
+        maven { url "https://jitpack.io" }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+        }
+    }
+
+    dependencies {
+        modImplementation "curse.maven:tooltipfix-411557:4577194"
+        modImplementation "curse.maven:modernfix-790626:5077297"
+        modImplementation "curse.maven:attributefix-280510:4911083"
+        modImplementation "curse.maven:model-gap-fix-676136:4607204"
+        modImplementation "curse.maven:max-health-fix-492246:4714764"
+        modImplementation "curse.maven:level-text-fix-840817:4714762"
+        modImplementation "curse.maven:anvilfixreborn-814868:5075909"
+        modImplementation "curse.maven:bow-infinity-fix-224713:4615222"
+        modImplementation "curse.maven:ugly-scoreboard-fix-402437:4619536"
+        modImplementation "curse.maven:cursorcentered-fix-846580:4602233"
+        modImplementation "curse.maven:fixcontainerslotexploit-934170:4940868"
+        modImplementation "curse.maven:geckoanimfix-959388:5015554"
+        modImplementation "com.github.Lortseam.completeconfig:base:2.5.0"
+    }
+  update_files:
+    - ~
+name: "FixerMods"

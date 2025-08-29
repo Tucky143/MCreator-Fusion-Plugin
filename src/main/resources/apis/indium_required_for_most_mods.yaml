@@ -1,0 +1,20 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+    
+         modImplementation "curse.maven:indium-459496:4572105"
+        
+    }
+  update_files:
+    - ~
+name: "Indium (Required for most mods)"

@@ -1,3 +1,3 @@
 templates:
   - template: mixin.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/@NAMEMixin.java"
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixins/@NAMEMixin.java"

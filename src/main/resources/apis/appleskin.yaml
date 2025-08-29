@@ -1,0 +1,18 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+        modImplementation "curse.maven:appleskin-248787:4770825"
+    }
+  update_files:
+    - ~
+name: "AppleSkin"

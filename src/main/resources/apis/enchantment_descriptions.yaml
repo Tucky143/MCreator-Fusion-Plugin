@@ -1,0 +1,18 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+       modImplementation "curse.maven:enchantment-descriptions-250419:5015030"
+    }
+  update_files:
+    - ~
+name: "Enchantment Descriptions"

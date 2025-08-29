@@ -1,0 +1,1 @@
+This is the item that goes in the right slot of the anvil recipe.

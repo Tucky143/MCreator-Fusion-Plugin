@@ -1,0 +1,23 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
+    
+    dependencies {
+         modImplementation "curse.maven:structure-essentials-forge-fabric-832882:4882272"
+         modImplementation "curse.maven:better-fps-render-distance-fabric-582640:5097293"
+         modImplementation "curse.maven:better-chunk-loading-forge-fabric-899487:5062595"
+         modImplementation "curse.maven:fast-async-world-save-forge-fabric-951499:5022373"
+         modImplementation "curse.maven:loot-integrations-580689:4887144"
+         modImplementation "curse.maven:cupboard-326652:5063789"
+    }
+  update_files:
+    - ~
+name: "Someaddon Mods"

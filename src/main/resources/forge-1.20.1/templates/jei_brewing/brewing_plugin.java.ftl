@@ -28,7 +28,7 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
             List<ItemStack> inputStack = new ArrayList<>();
 		    <#list brewingRecipes as recipe>
                 <#if recipe.brewingIngredientStack.getUnmappedValue().startsWith("TAG:")>
-                    ingredientStack = new ArrayList<ItemStack>(BuiltInRegistries.ITEM.getOrCreateTag(ItemTags.create(ResourceLocation.parse("${recipe.brewingIngredientStack?replace("TAG:","")}"))).stream().map(item -> new ItemStack((Item) item.value())).collect(Collectors.toCollection(ArrayList::new)));
+                    ingredientStack = new ArrayList<ItemStack>(ForgeRegistries.ITEMS.tags().getTag(ItemTags.create(new ResourceLocation("${recipe.brewingIngredientStack?replace("TAG:","")}"))).stream().map(item -> new ItemStack((Item) item)).collect(Collectors.toCollection(ArrayList::new)));
                 <#else>
                     ingredientStack.add(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)});
                 </#if>

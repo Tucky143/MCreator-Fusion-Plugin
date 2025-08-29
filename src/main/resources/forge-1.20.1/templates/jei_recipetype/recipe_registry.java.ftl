@@ -10,7 +10,7 @@ public class ${JavaModName}RecipeTypes {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		event.enqueueWork(() -> {
 		    SERIALIZERS.register(bus);
-            <#list jeirecipetypes as type>
+            <#list legacyjeirecipetypes as type>
                 SERIALIZERS.register("${type.getModElement().getRegistryName()}", () -> ${type.getModElement().getName()}Recipe.Serializer.INSTANCE);
             </#list>
 		});

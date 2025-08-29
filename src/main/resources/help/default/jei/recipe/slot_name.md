@@ -1,0 +1,1 @@
+The slot name is the identifier of an input ingredient. Each slot name in a recipe has to match the name in the recipe type.

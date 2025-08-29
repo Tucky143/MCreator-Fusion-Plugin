@@ -1,0 +1,2 @@
+If enabled, you will be able to store additional text in your recipe file.
+This data is not visible anywhere and can only be accessed using the provided procedure block under the JEI procedure category.

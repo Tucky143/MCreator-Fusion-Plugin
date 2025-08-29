@@ -1,0 +1,16 @@
+---
+fabric-1.20.1:
+  gradle: |
+    repositories {
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+        }
+    }
+    
+    dependencies {
+       modImplementation "maven.modrinth:yBW8D80W:mYl4RvKg"
+    }
+  update_files:
+    - ~
+name: "LambDynamicLights"

@@ -1,0 +1,1 @@
+This will be the title of the recipe category that will show up as the title in JEI.

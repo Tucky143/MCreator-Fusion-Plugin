@@ -46,9 +46,19 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ${name}Recipe recipe, IFocusGroup focuses) {
+        <#if data.enableIntList>
+            List<ItemStack> stacks = new ArrayList<>();
+        </#if>
         <#list data.slotList as slot>
             <#if slot.type == "INPUT">
-                builder.addSlot(RecipeIngredientRole.INPUT, ${slot.x}, ${slot.y}).addIngredients(recipe.getIngredients().get(${slot.slotid}));
+                <#if data.enableIntList>
+                    stacks.clear();
+                    for (ItemStack item : (List<ItemStack>) List.of(recipe.getIngredients().get(${slot.slotid}).getItems()))
+                        stacks.add(new ItemStack(item.getItem(), recipe.integers().get(${slot.slotid})));
+                    builder.addSlot(RecipeIngredientRole.INPUT, ${slot.x}, ${slot.y}).addItemStacks(stacks);
+                <#else>
+                    builder.addSlot(RecipeIngredientRole.INPUT, ${slot.x}, ${slot.y}).addIngredients(recipe.getIngredients().get(${slot.slotid}));
+                </#if>
             <#else>
                 builder.addSlot(RecipeIngredientRole.OUTPUT, ${slot.x}, ${slot.y}).addItemStack(recipe.getResultItem(null));
             </#if>

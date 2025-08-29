@@ -1,0 +1,1 @@
+ITEM_INPUT slots contain item recipe ingredients, while the FLUID_INPUT slots contain the fluid recipe ingredients. The OUTPUT slot contains the output of a recipe. There currently can only be one output slot per recipe type.

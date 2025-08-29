@@ -3,7 +3,9 @@ package net.tucky143.fusion.parts;
 import net.mcreator.element.ModElementType;
 import net.mcreator.generator.GeneratorFlavor;
 import net.tucky143.fusion.ui.modgui.*;
+import net.tucky143.fusion.ui.modgui.legacy.*;
 import net.tucky143.fusion.elements.*;
+import net.tucky143.fusion.elements.legacy.*;
 
 import static net.mcreator.element.ModElementTypeLoader.register;
 import static net.mcreator.generator.GeneratorFlavor.BaseLanguage.JAVA;
@@ -20,14 +22,17 @@ public class PluginElementTypes {
     public static ModElementType<?> MIXIN;
     public static ModElementType<?> ENDBIOME;
     public static ModElementType<?> ENDSTONE;
+    public static ModElementType<?> LOOTMODIFIER;
+    public static ModElementType<?> BLOCKSTATES;
+    public static ModElementType<?> CONFIG;
     public static ModElementType<?> JEIRECIPETYPE;
     public static ModElementType<?> JEIRECIPE;
     public static ModElementType<?> ANVILRECIPE;
     public static ModElementType<?> JEIINFORMATION;
-    public static ModElementType<?> LOOTMODIFIER;
-    public static ModElementType<?> BLOCKSTATES;
-    public static ModElementType<?> CONFIG;
-
+    public static ModElementType<?> LEGACYJEIRECIPETYPE;
+    public static ModElementType<?> LEGACYJEIRECIPE;
+    public static ModElementType<?> LEGACYANVILRECIPE;
+    public static ModElementType<?> LEGACYJEIINFORMATION;
 
     public static void load() {
 
@@ -75,6 +80,18 @@ public class PluginElementTypes {
                 new ModElementType<>("endstone", (Character) null, EndstoneGUI::new, Endstone.class)
         );
 
+        LOOTMODIFIER = register(
+                new ModElementType<>("lootmodifier", (Character) 'L', LootModifierGUI::new, LootModifier.class)
+        );
+
+        BLOCKSTATES = register(
+                new ModElementType<>("blockstates", (Character) null, BlockstatesGUI::new, Blockstates.class)
+        );
+
+        CONFIG = register(
+                new ModElementType<>("config", (Character) null, ConfigGUI::new, Config.class)
+        );
+
         JEIRECIPETYPE = register(
                 new ModElementType<>("jeirecipetype", (Character) 'C', JeiRecipeTypeGUI::new, JeiRecipeType.class)
         );
@@ -91,16 +108,20 @@ public class PluginElementTypes {
                 new ModElementType<>("jeiinformation", (Character) 'I', JeiInformationGUI::new, JeiInformation.class)
         );
 
-        LOOTMODIFIER = register(
-                new ModElementType<>("lootmodifier", (Character) 'L', LootModifierGUI::new, LootModifier.class)
+        LEGACYJEIRECIPETYPE = register(
+                new ModElementType<>("legacyjeirecipetype", (Character) 'C', LegacyJeiRecipeTypeGUI::new, LegacyJeiRecipeType.class)
         );
 
-        BLOCKSTATES = register(
-                new ModElementType<>("blockstates", (Character) null, BlockstatesGUI::new, Blockstates.class)
+        LEGACYJEIRECIPE = register(
+                new ModElementType<>("legacyjeirecipe", (Character) 'R', LegacyJeiRecipeGUI::new, LegacyJeiRecipe.class)
         );
 
-        CONFIG = register(
-                new ModElementType<>("config", (Character) null, ConfigGUI::new, Config.class)
+        LEGACYANVILRECIPE = register(
+                new ModElementType<>("legacyanvilrecipe", (Character) 'A', LegacyAnvilRecipeGUI::new, LegacyAnvilRecipe.class)
+        );
+
+        LEGACYJEIINFORMATION = register(
+                new ModElementType<>("legacyjeiinformation", (Character) 'I', LegacyJeiInformationGUI::new, LegacyJeiInformation.class)
         );
     }
 

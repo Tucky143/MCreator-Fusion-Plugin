@@ -89,33 +89,21 @@ public class Launcher extends JavaPlugin {
 
 		addListener(MCreatorLoadedEvent.class, event -> {
 			ACTION_REGISTRY = new PluginActions(event.getMCreator());
-			SwingUtilities.invokeLater(() -> PluginEventTriggers.modifyMenus(event.getMCreator()));
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    PluginEventTriggers.modifyMenus(event.getMCreator());
+                } catch (Exception ignored) {}
+            });
+            AddOtherTagsDialog.init(event);
+
+            Generator currentGenerator = event.getMCreator().getGenerator();
+            if (currentGenerator.getGeneratorConfiguration().getGeneratorFlavor() == GeneratorFlavor.FORGE) {
+                GradlePropertiesUpdater.main(event.getMCreator().getWorkspaceFolder().toString());
+            } else {
+                GradlePropertiesUpdater.SetTrue(event.getMCreator().getWorkspaceFolder().toString());
+            }
 		});
 
 		LOG.info("Plugin was loaded");
-
-        //TAGS+ INIT
-
-        addListener(MCreatorLoadedEvent.class, event -> SwingUtilities.invokeLater(() -> {
-            MCreator mcreator = event.getMCreator();
-            if (mcreator != null) { // Ensure MCreator is not null
-                // Add an action for opening the custom Tags+ dialog (AddOtherTagsDialog)
-                BasicAction openTagsDialogAction = new BasicAction(
-                        mcreator.getActionRegistry(),
-                        L10N.t("menu.tags.open_dialog"), // Localized menu item name
-                        e -> AddOtherTagsDialog.open(mcreator) // Open the AddOtherTagsDialog
-                );
-                openTagsDialogAction.setIcon(UIRES.get("16px.injecttags"));
-
-                JMenuBar menuBar = mcreator.getMainMenuBar();
-                if (menuBar != null) {
-                    mcreator.getToolBar().addToLeftToolbar(openTagsDialogAction);
-                    openTagsDialogAction.setTooltip("Add Additional Tags...");
-                    menuBar.revalidate();
-                    menuBar.repaint();
-                }
-            }
-        }));
-
 	}
 }
