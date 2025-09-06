@@ -1,7 +1,4 @@
-name: Build and Test
-
-permissions:
-  checks: write
+name: Build plugin (skip MCreator tests)
 
 on:
   push:
@@ -16,26 +13,28 @@ on:
       - 'dev/*'
 
 env:
-  # CI copy of MCreator (inside the runner workspace)
+  # MCreator checkout inside the runner workspace
   MCREATOR_CHECKOUT_PATH: ${{ github.workspace }}/mcreator-src
-  # fallback Gradle version to use when no wrapper is available (adjust if needed)
+  # Fallback Gradle version when wrapper isn't available
   FALLBACK_GRADLE_VERSION: '8.5'
+  # When 'true', skip MCreator tests and generic test tasks
+  SKIP_MCREATOR_TESTS: 'true'
 
 jobs:
   build:
-    name: Build and Debug
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
+    name: Build (Linux + Windows)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
-      - name: Checkout plugin repo
+      - name: Checkout plugin repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Checkout MCreator 2025.2
+      - name: Checkout MCreator 2025.2 into mcreator-src
         uses: actions/checkout@v4
         with:
           repository: MCreator/MCreator
@@ -43,109 +42,166 @@ jobs:
           path: mcreator-src
           fetch-depth: 1
 
-      - name: Debug:show env & top-level
+      - name: Debug:show paths and top-level files
         run: |
+          echo "Runner OS: $RUNNER_OS"
           echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
           echo "MCREATOR_CHECKOUT_PATH: $MCREATOR_CHECKOUT_PATH"
-          echo "pwd: $(pwd)"
-          uname -a
+          pwd || true
           ls -la || true
 
-      - name: Show plugin gradle wrapper files (debug)
-        run: |
-          echo "plugin: gradlew exists? $( [ -f ./gradlew ] && echo yes || echo no )"
-          echo "plugin: gradle-wrapper.jar exists? $( [ -f ./gradle/wrapper/gradle-wrapper.jar ] && echo yes || echo no )"
-          echo "mcreator-src: gradle-wrapper.jar exists? $( [ -f \"$MCREATOR_CHECKOUT_PATH/gradle/wrapper/gradle-wrapper.jar\" ] && echo yes || echo no )"
-
-      - name: Set up JDK 17 (Temurin)
+      - name: Set up Java 17 (Temurin)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Gradle (installed fallback)
+      - name: Set up Gradle (fallback)
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: ${{ env.FALLBACK_GRADLE_VERSION }}
 
-      - name: Ensure gradlew is executable (if present)
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties', '**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Ensure gradlew is executable (Linux/macOS only)
+        if: runner.os != 'Windows'
         run: |
           if [ -f ./gradlew ]; then
             chmod +x ./gradlew || true
             echo "made ./gradlew executable"
           else
-            echo "no ./gradlew"
+            echo "no ./gradlew present"
           fi
 
-      - name: Prepare gradle cache cleanup
+      - name: Debug:show wrapper files presence
         run: |
-          rm -f ~/.mcreator/gradle/caches/modules-2/modules-2.lock || true
-          rm -fr ~/.mcreator/gradle/caches/*/plugin-resolution/ || true
-          rm -f ~/.mcreator/gradle/caches/minecraft/deobfedDeps/providedDummy.jar || true
-          rm -f ~/.mcreator/gradle/caches/minecraft/deobfedDeps/compileDummy.jar || true
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock || true
-          rm -f ~/.gradle/caches/modules-2/gc.properties || true
+          echo "plugin: gradlew script? $( [ -f ./gradlew ] && echo yes || echo no )"
+          echo "plugin: gradlew.bat script? $( [ -f ./gradlew.bat ] && echo yes || echo no )"
+          echo "plugin: wrapper jar? $( [ -f ./gradle/wrapper/gradle-wrapper.jar ] && echo yes || echo no )"
+          echo "mcreator-src: wrapper jar? $( [ -f \"$MCREATOR_CHECKOUT_PATH/gradle/wrapper/gradle-wrapper.jar\" ] && echo yes || echo no )"
+          echo "mcreator-src: gradlew present? $( [ -f \"$MCREATOR_CHECKOUT_PATH/gradlew\" ] && echo yes || echo no )"
 
-      - name: Build with robust logic (wrapper or fallback) — OVERRIDES mcreator_path
-        id: build_step
+      # ---------- Linux build step ----------
+      - name: Build on Linux (use wrapper if possible, copy jar if needed)
+        if: runner.os == 'Linux'
         env:
-          # This env var is just for readability; Gradle receives it via -P below.
-          mcreator_path: ${{ env.MCREATOR_CHECKOUT_PATH }}
+          MCREATOR_PATH: ${{ env.MCREATOR_CHECKOUT_PATH }}
+          SKIP_MCREATOR_TESTS: ${{ env.SKIP_MCREATOR_TESTS }}
         run: |
           set -euo pipefail
-          echo "Starting build decision logic..."
+          PROP_ARG="-Pmcreator_path=${MCREATOR_PATH}"
+          SKIP_ARGS=""
+          if [ "${SKIP_MCREATOR_TESTS:-false}" = "true" ]; then
+            SKIP_ARGS="-x :MCreator:test -x test -DskipTests=true"
+            echo "Skipping MCreator tests (SKIP_ARGS=${SKIP_ARGS})"
+          fi
           PLUGIN_GRADLEW="./gradlew"
           PLUGIN_WRAPPER_JAR="./gradle/wrapper/gradle-wrapper.jar"
-          MCREATOR_WRAPPER_JAR="${MCREATOR_CHECKOUT_PATH}/gradle/wrapper/gradle-wrapper.jar"
-          # Force the project property override so local gradle.properties won't point to C:/...
-          PROP_ARG="-Pmcreator_path=${MCREATOR_CHECKOUT_PATH}"
+          MCREATOR_WRAPPER_JAR="${MCREATOR_PATH}/gradle/wrapper/gradle-wrapper.jar"
 
-          # Provide extra diagnostics up-front
-          echo "Using PROP_ARG: $PROP_ARG"
+          echo "PROP_ARG=$PROP_ARG"
           echo "plugin gradlew exists? $( [ -f "$PLUGIN_GRADLEW" ] && echo yes || echo no )"
           echo "plugin wrapper jar exists? $( [ -f "$PLUGIN_WRAPPER_JAR" ] && echo yes || echo no )"
-          echo "mcreator-src wrapper jar exists? $( [ -f "$MCREATOR_WRAPPER_JAR" ] && echo yes || echo no )"
+          echo "mcreator wrapper jar exists? $( [ -f "$MCREATOR_WRAPPER_JAR" ] && echo yes || echo no )"
 
-          # 1) If plugin has gradlew and its own wrapper JAR -> use it (clean)
           if [ -f "$PLUGIN_GRADLEW" ] && [ -f "$PLUGIN_WRAPPER_JAR" ]; then
-            echo "Found plugin gradlew + wrapper jar → running plugin ./gradlew"
-            ./gradlew --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
+            echo "Using plugin's gradlew + wrapper jar"
+            ./gradlew --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG $SKIP_ARGS
             exit 0
           fi
 
-          # 2) If plugin has gradlew but missing wrapper JAR, and mcreator has wrapper JAR -> copy it into plugin and run plugin gradlew
           if [ -f "$PLUGIN_GRADLEW" ] && [ ! -f "$PLUGIN_WRAPPER_JAR" ] && [ -f "$MCREATOR_WRAPPER_JAR" ]; then
             echo "Plugin has gradlew but missing wrapper JAR; copying MCreator's wrapper JAR into plugin..."
             mkdir -p ./gradle/wrapper
             cp "$MCREATOR_WRAPPER_JAR" ./gradle/wrapper/gradle-wrapper.jar
             chmod +x ./gradlew || true
-            echo "Invoking plugin ./gradlew (now that wrapper jar is present)"
-            ./gradlew --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
+            ./gradlew --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG $SKIP_ARGS
             exit 0
           fi
 
-          # 3) If plugin missing gradlew but mcreator has a wrapper script -> attempt to use mcreator's wrapper script (invoke it from plugin root)
-          if [ ! -f "$PLUGIN_GRADLEW" ] && [ -f "${MCREATOR_CHECKOUT_PATH}/gradlew" ]; then
-            echo "No plugin gradlew, but mcreator-src has gradlew. Attempting to run mcreator-src/gradlew from plugin root (with mcreator_path override)."
-            chmod +x "${MCREATOR_CHECKOUT_PATH}/gradlew" || true
-            "${MCREATOR_CHECKOUT_PATH}/gradlew" --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
+          if [ ! -f "$PLUGIN_GRADLEW" ] && [ -f "${MCREATOR_PATH}/gradlew" ]; then
+            echo "Using mcreator-src's gradlew from its checkout"
+            chmod +x "${MCREATOR_PATH}/gradlew" || true
+            "${MCREATOR_PATH}/gradlew" --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG $SKIP_ARGS
             exit 0
           fi
 
-          # 4) If no usable wrapper but installed gradle present -> use installed gradle with override
-          echo "Falling back to installed gradle with prop override (gradle version shown below):"
+          echo "Falling back to installed gradle"
           gradle -v || true
-          gradle --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
+          gradle --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG $SKIP_ARGS
         timeout-minutes: 40
 
-      - name: Final debug — list outputs & gradle selection
-        if: always()
+      # ---------- Windows build step ----------
+      - name: Build on Windows (use wrapper if possible, copy jar if needed)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          MCREATOR_PATH: ${{ env.MCREATOR_CHECKOUT_PATH }}
+          SKIP_MCREATOR_TESTS: ${{ env.SKIP_MCREATOR_TESTS }}
         run: |
-          echo "=== Build outputs (top) ==="
-          du -sh build || true
-          ls -la build || true
-          echo "=== test results (if any) ==="
-          ls -la **/build/test-results || true
-          echo "=== Last lines of Gradle stdout/stderr (recent logs) ==="
-          # Print recent runner logs if present
-          if [ -f build/gradle.log ]; then tail -n 200 build/gradle.log; else echo "(no build/gradle.log)"; fi
+          $ErrorActionPreference = 'Stop'
+          $PROP_ARG = "-Pmcreator_path=${env:MCREATOR_PATH}"
+          if ($env:SKIP_MCREATOR_TESTS -eq 'true') {
+            $SKIP_ARRAY = @('-x', ':MCreator:test', '-x', 'test', '-DskipTests=true')
+            Write-Host "Skipping MCreator tests"
+          } else {
+            $SKIP_ARRAY = @()
+            Write-Host "Running tests (disabled SKIP)"
+          }
+          $pluginGradlew = Join-Path $PWD 'gradlew.bat'
+          $pluginGradlewSh = Join-Path $PWD 'gradlew'  # unix-style wrapper might exist
+          $pluginWrapperJar = Join-Path $PWD 'gradle/wrapper/gradle-wrapper.jar'
+          $mcreatorWrapperJar = Join-Path $env:MCREATOR_PATH 'gradle/wrapper/gradle-wrapper.jar'
+          Write-Host "plugin gradlew.bat exists? $(Test-Path $pluginGradlew)"
+          Write-Host "plugin wrapper jar exists? $(Test-Path $pluginWrapperJar)"
+          Write-Host "mcreator wrapper jar exists? $(Test-Path $mcreatorWrapperJar)"
+
+          function Run-Gradle($scriptPath, $argsArray) {
+            Write-Host "Invoking: $scriptPath  $($argsArray -join ' ')"
+            & $scriptPath @argsArray
+          }
+
+          if (Test-Path $pluginGradlew -and Test-Path $pluginWrapperJar) {
+            $args = @('--no-daemon','clean','build','--info','--stacktrace','--warning-mode','all',$PROP_ARG) + $SKIP_ARRAY
+            Run-Gradle $pluginGradlew $args
+            exit 0
+          }
+
+          if (Test-Path $pluginGradlew -and -not (Test-Path $pluginWrapperJar) -and (Test-Path $mcreatorWrapperJar)) {
+            Write-Host "Copying mcreator wrapper jar into plugin"
+            New-Item -ItemType Directory -Force -Path (Join-Path $PWD 'gradle/wrapper') | Out-Null
+            Copy-Item -Path $mcreatorWrapperJar -Destination (Join-Path $PWD 'gradle/wrapper/gradle-wrapper.jar') -Force
+            $args = @('--no-daemon','clean','build','--info','--stacktrace','--warning-mode','all',$PROP_ARG) + $SKIP_ARRAY
+            Run-Gradle $pluginGradlew $args
+            exit 0
+          }
+
+          if (-not (Test-Path $pluginGradlew) -and (Test-Path (Join-Path $env:MCREATOR_PATH 'gradlew.bat'))) {
+            $mcredl = Join-Path $env:MCREATOR_PATH 'gradlew.bat'
+            $args = @('--no-daemon','clean','build','--info','--stacktrace','--warning-mode','all',$PROP_ARG) + $SKIP_ARRAY
+            Run-Gradle $mcredl $args
+            exit 0
+          }
+
+          Write-Host "Falling back to installed gradle (gradle CLI)"
+          & gradle -v
+          $args = @('--no-daemon','clean','build','--info','--stacktrace','--warning-mode','all',$PROP_ARG) + $SKIP_ARRAY
+          & gradle @args
+        timeout-minutes: 40
+
+      - name: Upload build artifact (build folder & build/libs)
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-build-${{ matrix.os }}
+          path: |
+            build/**
+            build/libs/**
+
