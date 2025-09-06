@@ -20,9 +20,6 @@
 *.rar
 
 # Gradle and build system
-.gradle/
-gradle/
-build/
 gradle.properties
 
 # IntelliJ IDEA project files
@@ -31,7 +28,5 @@ gradle.properties
 # Virtual machine crash logs
 hs_err_pid*
 replay_pid*
-/gradle/
 /build/
 /.idea/
-/.gradle/
