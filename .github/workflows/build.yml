@@ -1,18 +1,37 @@
-name: Build Plugin
+name: Build Test
+
+permissions:
+  checks: write
 
 on:
   push:
-    branches: [ "**" ]
+    branches:
+      - master
+      - 'feature/*'
+      - 'dev/*'
   pull_request:
-    branches: [ "**" ]
+    branches:
+      - master
+      - 'feature/*'
+      - 'dev/*'
+
+env:
+  # path inside the runner where MCreator will be checked out
+  MCREATOR_CHECKOUT_PATH: ${{ github.workspace }}/mcreator-src
 
 jobs:
   build:
-    runs-on: windows-latest
+    name: Build and Debug
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
-      - name: Checkout plugin
+      - name: Checkout plugin repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Checkout MCreator 2025.2
         uses: actions/checkout@v4
@@ -20,26 +39,132 @@ jobs:
           repository: MCreator/MCreator
           ref: 2025.2.28610
           path: mcreator-src
+          fetch-depth: 1
 
-      - name: Set up JDK
+      - name: Debug: Print basic environment
+        run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "Runner OS: $(uname -a)"
+          echo "Current dir: $(pwd)"
+          echo "List top-level files:"
+          ls -la || true
+
+      - name: Debug: Show repo and mcreator-src structure
+        run: |
+          echo "=== plugin repo files ==="
+          ls -la "$GITHUB_WORKSPACE"
+          echo
+          echo "=== gradle dir (plugin) ==="
+          ls -la gradle || true
+          echo
+          echo "=== plugin gradle wrapper files (if any) ==="
+          [ -f gradle/wrapper/gradle-wrapper.jar ] && echo "plugin gradle-wrapper.jar FOUND" || echo "plugin gradle-wrapper.jar MISSING"
+          [ -f gradle/wrapper/gradle-wrapper.properties ] && echo "plugin gradle-wrapper.properties FOUND" || echo "plugin gradle-wrapper.properties MISSING"
+          echo
+          echo "=== mcreator-src top-level (first 200 entries) ==="
+          ls -la "$MCREATOR_CHECKOUT_PATH" | sed -n '1,200p' || true
+          echo
+          echo "=== mcreator-src gradle wrapper check ==="
+          [ -f "$MCREATOR_CHECKOUT_PATH/gradle/wrapper/gradle-wrapper.jar" ] && echo "mcreator gradle-wrapper.jar FOUND" || echo "mcreator gradle-wrapper.jar MISSING"
+
+      - name: Set up JDK 17 (Temurin)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 17
 
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      - name: Show Java version
+        run: java -version || true
 
-      - name: Build plugin
-        run: ./gradlew build
+      - name: Setup Gradle (tooling, used for fallback)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Show Gradle version (installed)
+        run: gradle -v || true
+
+      - name: Ensure gradlew executable (if present)
+        run: |
+          if [ -f ./gradlew ]; then
+            echo "Found gradlew — setting +x"
+            chmod +x ./gradlew || true
+          else
+            echo "No gradlew in repository root"
+          fi
+
+      - name: Check for Gradle wrapper JAR (plugin or mcreator)
+        id: check_wrapper
+        run: |
+          if [ -f ./gradle/wrapper/gradle-wrapper.jar ]; then
+            echo "wrapper_location=plugin" >> $GITHUB_OUTPUT
+          elif [ -f "$MCREATOR_CHECKOUT_PATH/gradle/wrapper/gradle-wrapper.jar" ]; then
+            # Some builds call wrapper from mcreator-src; note it
+            echo "wrapper_location=mcreator" >> $GITHUB_OUTPUT
+          else
+            echo "wrapper_location=none" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Print gradle.properties and wrapper props (debug)
+        run: |
+          echo "---- gradle.properties (root) ----"
+          [ -f gradle.properties ] && sed -n '1,200p' gradle.properties || echo "(none)"
+          echo "---- wrapper properties (plugin) ----"
+          [ -f gradle/wrapper/gradle-wrapper.properties ] && sed -n '1,200p' gradle/wrapper/gradle-wrapper.properties || echo "(none)"
+          echo "---- wrapper properties (mcreator-src) ----"
+          [ -f "$MCREATOR_CHECKOUT_PATH/gradle/wrapper/gradle-wrapper.properties" ] && sed -n '1,200p' "$MCREATOR_CHECKOUT_PATH/gradle/wrapper/gradle-wrapper.properties" || echo "(none)"
+
+      - name: Prepare Gradle cache cleanup (prevent stale locks)
+        run: |
+          # Remove annoying lockfiles that sometimes break CI caching between runs
+          rm -f ~/.mcreator/gradle/caches/modules-2/modules-2.lock || true
+          rm -fr ~/.mcreator/gradle/caches/*/plugin-resolution/ || true
+          rm -f ~/.mcreator/gradle/caches/minecraft/deobfedDeps/providedDummy.jar || true
+          rm -f ~/.mcreator/gradle/caches/minecraft/deobfedDeps/compileDummy.jar || true
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock || true
+          rm -f ~/.gradle/caches/modules-2/gc.properties || true
         shell: bash
-        env:
-          mcreator_path: ${{ github.workspace }}/mcreator-src
 
+      - name: Build using Gradle wrapper (if plugin wrapper exists)
+        if: steps.check_wrapper.outputs.wrapper_location == 'plugin'
+        env:
+          mcreator_path: ${{ env.MCREATOR_CHECKOUT_PATH }}
+        run: |
+          echo "Using plugin's gradle wrapper"
+          echo "pwd: $(pwd)"
+          ls -la gradle || true
+          ./gradlew --no-daemon clean build --info
+        timeout-minutes: 30
+
+      - name: Build using Gradle wrapper from mcreator (if plugin wrapper missing but mcreator's wrapper exists)
+        if: steps.check_wrapper.outputs.wrapper_location == 'mcreator'
+        env:
+          mcreator_path: ${{ env.MCREATOR_CHECKOUT_PATH }}
+        run: |
+          echo "No plugin wrapper -- using mcreator-src wrapper (invoke from plugin root but Gradle will download as needed)"
+          # We still invoke ./gradlew if present, else use the system gradle installed by setup-gradle
+          if [ -f ./gradlew ]; then
+            ./gradlew --no-daemon clean build --info
+          else
+            # call gradle (installed by gradle/actions/setup-gradle)
+            gradle --no-daemon clean build --info
+          fi
+        timeout-minutes: 30
+
+      - name: Build using installed Gradle (fallback)
+        if: steps.check_wrapper.outputs.wrapper_location == 'none'
+        env:
+          mcreator_path: ${{ env.MCREATOR_CHECKOUT_PATH }}
+        run: |
+          echo "No gradle wrapper found (plugin nor mcreator). Falling back to installed gradle."
+          gradle --no-daemon clean build --info
+        timeout-minutes: 30
+
+      - name: Final debug — list build outputs and show last logs
+        if: always()
+        run: |
+          echo "=== Build outputs ==="
+          du -sh build || true
+          ls -la build || true
+          echo "=== Test results (if any) ==="
+          ls -la **/build/test-results || true
+          echo "=== Show last 150 lines of Gradle log (if present) ==="
+          [ -f build/gradle.log ] && tail -n 150 build/gradle.log || true
