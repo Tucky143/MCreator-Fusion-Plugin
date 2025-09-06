@@ -38,6 +38,8 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build plugin
-        run: gradlew build
+        run: ./gradlew build
+        shell: bash
         env:
           mcreator_path: ${{ github.workspace }}/mcreator-src
+
