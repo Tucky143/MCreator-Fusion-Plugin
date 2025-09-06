@@ -16,7 +16,10 @@ on:
       - 'dev/*'
 
 env:
+  # CI copy of MCreator (inside the runner workspace)
   MCREATOR_CHECKOUT_PATH: ${{ github.workspace }}/mcreator-src
+  # fallback Gradle version to use when no wrapper is available (adjust if needed)
+  FALLBACK_GRADLE_VERSION: '8.5'
 
 jobs:
   build:
@@ -54,14 +57,16 @@ jobs:
           echo "plugin: gradle-wrapper.jar exists? $( [ -f ./gradle/wrapper/gradle-wrapper.jar ] && echo yes || echo no )"
           echo "mcreator-src: gradle-wrapper.jar exists? $( [ -f \"$MCREATOR_CHECKOUT_PATH/gradle/wrapper/gradle-wrapper.jar\" ] && echo yes || echo no )"
 
-      - name: Set up JDK 21 (Temurin)
+      - name: Set up JDK 17 (Temurin)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 17
 
       - name: Setup Gradle (installed fallback)
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: ${{ env.FALLBACK_GRADLE_VERSION }}
 
       - name: Ensure gradlew is executable (if present)
         run: |
@@ -81,59 +86,66 @@ jobs:
           rm -f ~/.gradle/caches/modules-2/modules-2.lock || true
           rm -f ~/.gradle/caches/modules-2/gc.properties || true
 
-      - name: Build:plugin gradle wrapper present (preferred)
-        if: ${{ always() && (steps.__noop || true) }} # placeholder to ensure ordering; actual logic below
+      - name: Build with robust logic (wrapper or fallback) — OVERRIDES mcreator_path
+        id: build_step
+        env:
+          # This env var is just for readability; Gradle receives it via -P below.
+          mcreator_path: ${{ env.MCREATOR_CHECKOUT_PATH }}
         run: |
-          echo "Determining build strategy..."
           set -euo pipefail
-
+          echo "Starting build decision logic..."
           PLUGIN_GRADLEW="./gradlew"
           PLUGIN_WRAPPER_JAR="./gradle/wrapper/gradle-wrapper.jar"
           MCREATOR_WRAPPER_JAR="${MCREATOR_CHECKOUT_PATH}/gradle/wrapper/gradle-wrapper.jar"
+          # Force the project property override so local gradle.properties won't point to C:/...
+          PROP_ARG="-Pmcreator_path=${MCREATOR_CHECKOUT_PATH}"
 
-          # Decision tree:
+          # Provide extra diagnostics up-front
+          echo "Using PROP_ARG: $PROP_ARG"
+          echo "plugin gradlew exists? $( [ -f "$PLUGIN_GRADLEW" ] && echo yes || echo no )"
+          echo "plugin wrapper jar exists? $( [ -f "$PLUGIN_WRAPPER_JAR" ] && echo yes || echo no )"
+          echo "mcreator-src wrapper jar exists? $( [ -f "$MCREATOR_WRAPPER_JAR" ] && echo yes || echo no )"
+
+          # 1) If plugin has gradlew and its own wrapper JAR -> use it (clean)
           if [ -f "$PLUGIN_GRADLEW" ] && [ -f "$PLUGIN_WRAPPER_JAR" ]; then
             echo "Found plugin gradlew + wrapper jar → running plugin ./gradlew"
-            ./gradlew --no-daemon clean build --info
+            ./gradlew --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
             exit 0
           fi
 
+          # 2) If plugin has gradlew but missing wrapper JAR, and mcreator has wrapper JAR -> copy it into plugin and run plugin gradlew
           if [ -f "$PLUGIN_GRADLEW" ] && [ ! -f "$PLUGIN_WRAPPER_JAR" ] && [ -f "$MCREATOR_WRAPPER_JAR" ]; then
             echo "Plugin has gradlew but missing wrapper JAR; copying MCreator's wrapper JAR into plugin..."
             mkdir -p ./gradle/wrapper
             cp "$MCREATOR_WRAPPER_JAR" ./gradle/wrapper/gradle-wrapper.jar
             chmod +x ./gradlew || true
             echo "Invoking plugin ./gradlew (now that wrapper jar is present)"
-            ./gradlew --no-daemon clean build --info
+            ./gradlew --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
             exit 0
           fi
 
-          if [ -f "$MCREATOR_WRAPPER_JAR" ] && [ ! -f "$PLUGIN_GRADLEW" ]; then
-            echo "No plugin gradlew/script, but MCreator wrapper jar exists. Using installed gradle (safer across workspaces)."
-            gradle --no-daemon clean build --info
+          # 3) If plugin missing gradlew but mcreator has a wrapper script -> attempt to use mcreator's wrapper script (invoke it from plugin root)
+          if [ ! -f "$PLUGIN_GRADLEW" ] && [ -f "${MCREATOR_CHECKOUT_PATH}/gradlew" ]; then
+            echo "No plugin gradlew, but mcreator-src has gradlew. Attempting to run mcreator-src/gradlew from plugin root (with mcreator_path override)."
+            chmod +x "${MCREATOR_CHECKOUT_PATH}/gradlew" || true
+            "${MCREATOR_CHECKOUT_PATH}/gradlew" --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
             exit 0
           fi
 
-          if [ -f "$PLUGIN_GRADLEW" ] && [ ! -f "$PLUGIN_WRAPPER_JAR" ] && [ ! -f "$MCREATOR_WRAPPER_JAR" ]; then
-            echo "Plugin has gradlew but no wrapper JAR anywhere → cannot use wrapper. Falling back to installed gradle."
-            gradle --no-daemon clean build --info
-            exit 0
-          fi
+          # 4) If no usable wrapper but installed gradle present -> use installed gradle with override
+          echo "Falling back to installed gradle with prop override (gradle version shown below):"
+          gradle -v || true
+          gradle --no-daemon clean build --info --stacktrace --warning-mode all $PROP_ARG
+        timeout-minutes: 40
 
-          # final fallback
-          echo "No wrapper found and no gradlew → using installed gradle."
-          gradle --no-daemon clean build --info
-        env:
-          mcreator_path: ${{ env.MCREATOR_CHECKOUT_PATH }}
-        timeout-minutes: 30
-
-      - name: Final debug — list build outputs and recent logs
+      - name: Final debug — list outputs & gradle selection
         if: always()
         run: |
           echo "=== Build outputs (top) ==="
           du -sh build || true
           ls -la build || true
-          echo "=== test results ==="
+          echo "=== test results (if any) ==="
           ls -la **/build/test-results || true
-          echo "=== tail gradle logs (if exist) ==="
-          if [ -f build/gradle.log ]; then tail -n 200 build/gradle.log; fi
+          echo "=== Last lines of Gradle stdout/stderr (recent logs) ==="
+          # Print recent runner logs if present
+          if [ -f build/gradle.log ]; then tail -n 200 build/gradle.log; else echo "(no build/gradle.log)"; fi
