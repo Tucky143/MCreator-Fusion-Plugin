@@ -33,6 +33,9 @@ public class PluginElementTypes {
     public static ModElementType<?> LEGACYJEIRECIPE;
     public static ModElementType<?> LEGACYANVILRECIPE;
     public static ModElementType<?> LEGACYJEIINFORMATION;
+    public static ModElementType<?> TOAST;
+    public static ModElementType<?> DYEABLE_ITEM;
+    public static ModElementType<?> DYEABLE_ARMOR;
 
     public static void load() {
 
@@ -123,6 +126,17 @@ public class PluginElementTypes {
         LEGACYJEIINFORMATION = register(
                 new ModElementType<>("legacyjeiinformation", (Character) 'I', LegacyJeiInformationGUI::new, LegacyJeiInformation.class)
         );
+
+        TOAST = register(
+                new ModElementType<>("toast", (Character) 'T', ToastGUI::new, Toast.class)
+        );
+
+        DYEABLE_ITEM = register(
+                new ModElementType<>("dyeable_item", (Character)null, DyeableItemGUI::new, DyeableItem.class)
+        );
+
+        DYEABLE_ARMOR = register(new ModElementType<>("dyeable_armor", (Character)null, DyeableArmorGUI::new, DyeableArmor.class));
+
     }
 
 }

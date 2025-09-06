@@ -4,3 +4,5 @@ jsonarray: com.google.gson.JsonArray
 tooltip: List<Component>
 fluidstack: FluidStack
 arraylist: ArrayList
+itemstack: ItemStack
+toast: Toast

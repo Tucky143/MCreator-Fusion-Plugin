@@ -12,10 +12,12 @@ import net.mcreator.plugin.events.workspace.MCreatorLoadedEvent;
 import net.mcreator.ui.MCreator;
 import net.mcreator.ui.action.BasicAction;
 import net.mcreator.ui.blockly.BlocklyEditorType;
+import net.mcreator.ui.component.TransparentToolBar;
 import net.mcreator.ui.init.L10N;
 import net.mcreator.ui.init.UIRES;
 import net.mcreator.ui.modgui.BiomeGUI;
 import net.mcreator.ui.modgui.ModElementGUI;
+import net.mcreator.ui.workspace.AbstractWorkspacePanel;
 import net.tucky143.fusion.parts.PluginActions;
 import net.tucky143.fusion.parts.PluginElementTypes;
 import net.tucky143.fusion.parts.PluginEventTriggers;
@@ -24,8 +26,10 @@ import net.tucky143.fusion.ui.modgui.EndBiomeGUI;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static net.mcreator.element.parts.IWorkspaceDependent.LOG;
@@ -35,6 +39,8 @@ public class Launcher extends JavaPlugin {
 	public static PluginActions ACTION_REGISTRY;
 	public static Set<Plugin> PLUGIN_INSTANCE = new HashSet<>();
     public static final BlocklyEditorType CONFIG_EDITOR = new BlocklyEditorType("config", "cfg", "config_start");
+    public static final List<String> DYEABLE_ARMOR_SUPPORTED_VERSIONS = List.of("neoforge-1.20.6", "forge-1.20.1");
+    public static PluginActions ACTIONS;
 
 	public static void disableComponent(ModElementGUI gui, Field field) throws Exception {
 		field.setAccessible(true);
@@ -103,6 +109,22 @@ public class Launcher extends JavaPlugin {
                 GradlePropertiesUpdater.SetTrue(event.getMCreator().getWorkspaceFolder().toString());
             }
 		});
+
+        this.addListener(ModElementGUIEvent.BeforeLoading.class, (e) -> {
+            String generatorName = e.getMCreator().getGeneratorConfiguration().getGeneratorName();
+            if (DYEABLE_ARMOR_SUPPORTED_VERSIONS.contains(generatorName)) {
+                ACTIONS = new PluginActions(e.getMCreator());
+                for(Component component : e.getMCreator().getWorkspacePanel().getComponents()) {
+                    if (component instanceof TransparentToolBar) {
+                        var bar = ((TransparentToolBar) component).add(ACTIONS.importArmorOverlayTexture);
+                        JButton importOverlay = AbstractWorkspacePanel.createToolBarButton(L10N.t("workspace.textures.armor_overlay.import", new Object[0]), UIRES.get("16px.importarmor"));
+                        bar.add(new JToolBar.Separator());
+                        bar.add(importOverlay);
+                    }
+                }
+            }
+
+        });
 
 		LOG.info("Plugin was loaded");
 	}

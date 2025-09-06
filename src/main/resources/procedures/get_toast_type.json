@@ -1,0 +1,29 @@
+{
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "toast",
+      "check": "Toast"
+    },
+    {
+      "type": "field_data_list_selector",
+      "name": "type",
+      "datalist": "ToastTypes"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Boolean",
+  "colour": "#607c99",
+  "mcreator": {
+    "toolbox_id": "toasts",
+    "toolbox_init": [
+      "<value name=\"toast\"><block type=\"variables_get_toast\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" is_player_var=\"false\" has_entity=\"false\"></mutation><field name=\"VAR\"></field></block></value>"
+    ],
+    "inputs": [
+      "toast"
+    ],
+    "fields": [
+      "type"
+    ]
+  }
+}

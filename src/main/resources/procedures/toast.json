@@ -1,0 +1,22 @@
+{
+  "args0": [
+    {
+      "type": "field_data_list_selector",
+      "name": "toast",
+      "datalist": "toasts",
+      "customEntryProviders": "toast"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Toast",
+  "colour": "#699960",
+  "mcreator": {
+    "toolbox_id": "toasts",
+    "toolbox_init": [
+      "~<field name=\"toast\">CUSTOM:ExampleToast</field>"
+    ],
+    "fields": [
+      "toast"
+    ]
+  }
+}

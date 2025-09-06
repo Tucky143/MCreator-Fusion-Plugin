@@ -1,0 +1,1 @@
+This texture (Screen texture type) will be displayed of the left of the toast like advancement and recipes do.

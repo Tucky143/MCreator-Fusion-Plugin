@@ -1,0 +1,10 @@
+{
+  "dependencies_provided": [
+    {
+      "name": "Toast",
+      "type": "toast"
+    }
+  ],
+  "cancelable": true,
+  "side": "both"
+}

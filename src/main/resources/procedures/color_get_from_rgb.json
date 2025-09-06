@@ -1,0 +1,33 @@
+{
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "redGreenBlue",
+      "options": [
+        ["Red", "red"],
+        ["Green", "green"],
+        ["Blue", "blue"]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "color",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "output": "Number",
+  "colour": "%{BKY_MATH_HUE}",
+  "mcreator": {
+    "toolbox_id": "dyeable_utils",
+    "toolbox_init": [
+      "<value name=\"otherwise\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value>"
+    ],
+    "inputs": [
+      "color"
+    ],
+    "fields": [
+      "redGreenBlue"
+    ]
+  }
+}

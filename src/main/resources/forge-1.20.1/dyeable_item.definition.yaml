@@ -1,0 +1,81 @@
+templates:
+  - template: dyeable_item/item.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/@NAMEItem.java"
+  - template: item/item_container.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/inventory/@NAMEInventoryCapability.java"
+    condition: hasInventory()
+  - template: dyeable_item/json/item.json.ftl
+    writer: json
+    condition:
+      - "renderType #= 0"
+      - "hasNormalModel()"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: dyeable_item/json/tool.json.ftl
+    writer: json
+    condition:
+      - "renderType #= 0"
+      - "hasToolModel()"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: dyeable_item/json/rangeditem.json.ftl
+    writer: json
+    condition:
+      - "renderType #= 0"
+      - "hasRangedItemModel()"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: json/item_cmodel.json.ftl
+    writer: json
+    condition: "renderType #= 1"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: json/item_cmodel_obj.json.ftl
+    writer: json
+    condition: "renderType #= 2"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+
+global_templates:
+  - template: dyeable_item/idyeable.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/IDyeableItem.java"
+  - template: dyeable_item/dye_item_recipe.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/crafting/DyeItemRecipe.java"
+  - template: elementinits/recipe_serializers.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameRecipeSerializers.java"
+  - template: color_register.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/client/color/RegisterColor.java"
+    canLock: true
+  - template: dyeable_item/json/dyeable_item.json.ftl
+    name: "@MODDATAROOT/recipes/dyeable_item.json"
+    writer: json
+
+list_templates:
+  - name: "Item states"
+    listData: data.getModels()
+    forEach:
+      - template: json/item.json.ftl
+        writer: json
+        condition:
+          - "renderType #= 0"
+          - "hasNormalModel()"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+      - template: json/tool.json.ftl
+        writer: json
+        condition:
+          - "renderType #= 0"
+          - "hasToolModel()"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+      - template: json/rangeditem.json.ftl
+        writer: json
+        condition:
+          - "renderType #= 0"
+          - "hasRangedItemModel()"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+      - template: json/item_cmodel.json.ftl
+        writer: json
+        condition: "renderType #= 1"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+      - template: json/item_cmodel_obj.json.ftl
+        writer: json
+        condition: "renderType #= 2"
+        name: "@MODASSETSROOT/models/item/@registryname_@itemindex.json"
+
+localizationkeys:
+  - key: item.@modid.@registryname
+    mapto: name

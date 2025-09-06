@@ -1,0 +1,21 @@
+{
+ "args0": [
+    {
+     "type": "input_value",
+     "name": "text",
+     "check": "String"
+    }
+],
+   "inputsInline": true,
+  "output": "Boolean",
+   "colour": 666,
+   "mcreator": {
+     "toolbox_id": "ppsecl",
+     "toolbox_init": [
+       "<value name=\"text\"><block type=\"text\"><field name=\"TEXT\">en_us</field></block></value>"
+],
+  "inputs": [
+    "text"
+   ]
+  }
+}

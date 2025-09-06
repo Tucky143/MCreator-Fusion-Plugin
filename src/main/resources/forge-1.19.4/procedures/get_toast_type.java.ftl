@@ -1,0 +1,1 @@
+${input$toast} instanceof ${field$type}

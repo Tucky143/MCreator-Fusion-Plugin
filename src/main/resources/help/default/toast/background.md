@@ -1,0 +1,1 @@
+This texture (Screen texture type) will serve as the background for the toast.

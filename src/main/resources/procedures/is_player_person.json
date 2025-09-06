@@ -1,0 +1,27 @@
+{
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "key",
+      "options": [
+        [
+          "FirstPerson",
+          "Minecraft.getInstance().options.getCameraType().isFirstPerson()"
+        ],
+        [
+          "NOT_FirstPerson",
+          "!Minecraft.getInstance().options.getCameraType().isFirstPerson()"
+        ]
+      ]
+    }
+  ],
+  "inputsInline": true,
+  "output": "Boolean",
+  "colour": "666",
+  "mcreator": {
+    "toolbox_id": "ppsecl",
+    "fields": [
+      "key"
+    ]
+  }
+}

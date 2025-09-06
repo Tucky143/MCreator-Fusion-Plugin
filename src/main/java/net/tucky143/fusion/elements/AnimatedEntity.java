@@ -1,12 +1,34 @@
+/*
+ * MCreator (https://mcreator.net/)
+ * Copyright (C) 2020 Pylo and contributors
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package net.tucky143.fusion.elements;
 
 import net.mcreator.blockly.data.BlocklyLoader;
+import net.mcreator.blockly.data.BlocklyXML;
 import net.mcreator.blockly.java.BlocklyToJava;
 import net.mcreator.element.BaseType;
 import net.mcreator.element.GeneratableElement;
+import net.mcreator.element.ModElementType;
 import net.mcreator.element.parts.*;
+import net.mcreator.element.parts.procedure.LogicProcedure;
 import net.mcreator.element.parts.procedure.NumberProcedure;
 import net.mcreator.element.parts.procedure.Procedure;
+import net.mcreator.element.types.LivingEntity;
 import net.mcreator.element.types.interfaces.ICommonType;
 import net.mcreator.element.types.interfaces.IEntityWithModel;
 import net.mcreator.element.types.interfaces.IMCItemProvider;
@@ -18,22 +40,28 @@ import net.mcreator.minecraft.MCItem;
 import net.mcreator.minecraft.MinecraftImageGenerator;
 import net.mcreator.ui.blockly.BlocklyEditorType;
 import net.mcreator.ui.minecraft.states.PropertyDataWithValue;
+import net.mcreator.ui.modgui.LivingEntityGUI;
 import net.mcreator.ui.workspace.resources.TextureType;
 import net.mcreator.util.FilenameUtilsPatched;
+import net.mcreator.workspace.Workspace;
 import net.mcreator.workspace.elements.ModElement;
+import net.mcreator.workspace.references.ModElementReference;
+import net.mcreator.workspace.references.ResourceReference;
+import net.mcreator.workspace.references.TextureReference;
 import net.mcreator.workspace.resources.Model;
 import net.mcreator.workspace.resources.Texture;
-import net.tucky143.fusion.parts.PluginElementTypes;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@SuppressWarnings("unused")
-public class AnimatedEntity extends GeneratableElement
-        implements IEntityWithModel, ITabContainedElement, ICommonType, IMCItemProvider {
+@SuppressWarnings({ "unused", "NotNullFieldNotInitialized" }) public class AnimatedEntity extends GeneratableElement
+		implements IEntityWithModel, ITabContainedElement, ICommonType, IMCItemProvider {
 
     public String mobName;
     public String mobLabel;
@@ -128,7 +156,7 @@ public class AnimatedEntity extends GeneratableElement
 
     public boolean hasAI;
     public String aiBase;
-    public String aixml;
+    @BlocklyXML("aitasks") public String aixml;
 
     public String model;
     public String groupName;
@@ -273,14 +301,14 @@ public class AnimatedEntity extends GeneratableElement
                     .getTemplateGeneratorFromName(BlocklyEditorType.AI_TASK.registryName()),
                     new ProceduralBlockCodeGenerator(blocklyBlockCodeGenerator));
 
-            List<?> unmodifiableAIBases = (List<?>) getModElement().getWorkspace().getGenerator()
-                    .getGeneratorConfiguration().getDefinitionsProvider()
-                    .getModElementDefinition(PluginElementTypes.ANIMATEDENTITY).get("unmodifiable_ai_bases");
-            additionalData.put("aicode", unmodifiableAIBases != null && !unmodifiableAIBases.contains(aiBase) ?
-                    blocklyToJava.getGeneratedCode() :
-                    "");
-            additionalData.put("aiblocks", blocklyToJava.getUsedBlocks());
-        };
-    }
-
+			List<?> unmodifiableAIBases = (List<?>) getModElement().getWorkspace().getGenerator()
+					.getGeneratorConfiguration().getDefinitionsProvider()
+					.getModElementDefinition(ModElementType.LIVINGENTITY).get("unmodifiable_ai_bases");
+			additionalData.put("aicode", unmodifiableAIBases != null && !unmodifiableAIBases.contains(aiBase) ?
+					blocklyToJava.getGeneratedCode() :
+					"");
+			additionalData.put("aiblocks", blocklyToJava.getUsedBlocks());
+			additionalData.put("extra_templates_code", blocklyToJava.getExtraTemplatesCode());
+		};
+	}
 }

@@ -4,7 +4,6 @@ import net.mcreator.element.GeneratableElement;
 import net.mcreator.element.parts.EntityEntry;
 import net.mcreator.minecraft.MinecraftImageGenerator;
 import net.mcreator.workspace.elements.ModElement;
-
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * Class stores informations about created mod element, is saved in Workspace
  */
 public class Attribute extends GeneratableElement {
-    public String description;
+    public String description = "";
     public Double minValue;
     public Double maxValue;
     public Double defaultValue;
