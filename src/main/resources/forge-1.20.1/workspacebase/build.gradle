@@ -14,8 +14,6 @@ legacyForge {
 
     validateAccessTransformers = true
 
-    copyIdeResources = true
-
     runs {
         client {
             client()
