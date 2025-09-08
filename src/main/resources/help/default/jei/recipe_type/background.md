@@ -1,1 +1,0 @@
-This is the texture that each of the recipes in this category will use. The texture has to be 256x256 pixel in size, as it is required by JEI, tho the part of the texture that JEI is supposed to use is specified with the texture width and height option.

@@ -1,1 +1,0 @@
-The amount of items that this recipe consumes from the right slot.

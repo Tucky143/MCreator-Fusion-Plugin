@@ -1,1 +1,0 @@
-((LivingEntity) ${input$entity}).getAttribute(BuiltInRegistries.ATTRIBUTE.getHolder(new ResourceLocation(${input$name})).get()).getBaseValue()

@@ -1,1 +1,0 @@
-Maximal value of the attribute. If the attribute is set below this value, the maximum value will overwrite the current value.

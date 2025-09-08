@@ -1,1 +1,0 @@
-${field$VAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")} = new com.google.gson.JsonArray();

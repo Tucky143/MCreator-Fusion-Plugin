@@ -22,7 +22,6 @@ import net.tucky143.fusion.parts.PluginActions;
 import net.tucky143.fusion.parts.PluginElementTypes;
 import net.tucky143.fusion.parts.PluginEventTriggers;
 import net.tucky143.fusion.ui.dialogs.AddOtherTagsDialog;
-import net.tucky143.fusion.ui.modgui.EndBiomeGUI;
 
 import javax.swing.*;
 
@@ -72,25 +71,6 @@ public class Launcher extends JavaPlugin {
 
 		addListener(ModElementGUIEvent.AfterLoading.class, event -> {
 			PluginEventTriggers.interceptProcedurePanel(event.getMCreator(), event.getModElementGUI());
-
-			if (event.getModElementGUI() instanceof BiomeGUI biome) {
-				if (EndBiomeGUI.isEndBiome(biome.getElementFromGUI().getModElement().getName(), null, event.getMCreator())) {
-					try {
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("spawnBiome"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("spawnBiomeNether"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("spawnInCaves"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("underwaterBlock"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("genTemperature"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("genHumidity"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("genContinentalness"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("genErosion"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("genWeirdness"));
-						disableComponent(biome, BiomeGUI.class.getDeclaredField("treesPerChunk"));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
 		});
 
 		addListener(MCreatorLoadedEvent.class, event -> {

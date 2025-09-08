@@ -1,1 +1,0 @@
-This option controls if the item input can be left out in recipes or set as air in procedures.

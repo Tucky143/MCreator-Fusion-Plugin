@@ -1,1 +1,0 @@
-${field$VAR?replace("local:", "")?replace("global:", "${JavaModName}Variables.")}.get((int)${input$index}).getAsJsonArray()

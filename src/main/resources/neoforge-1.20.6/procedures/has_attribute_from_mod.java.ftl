@@ -1,1 +1,0 @@
-(entity instanceof LivingEntity && ((LivingEntity) ${input$entity}).getAttribute(BuiltInRegistries.ATTRIBUTE.getHolder(new ResourceLocation(${input$name})).get()) != null)

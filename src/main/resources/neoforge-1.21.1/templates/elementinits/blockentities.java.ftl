@@ -40,7 +40,6 @@ package ${package}.init;
 <#assign animatedBlockentitiesWithInventory = w.getGElementsOfType("animatedblock")?filter(e -> e.hasInventory)>
 
 <#if blockentitiesWithInventory?size != 0 || animatedBlockentitiesWithInventory?size != 0>
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 </#if>
 public class ${JavaModName}BlockEntities {
@@ -66,11 +65,10 @@ public class ${JavaModName}BlockEntities {
 
 	<#if blockentitiesWithInventory?size != 0 || animatedBlockentitiesWithInventory?size != 0>
 	<#compress>
-	@SubscribeEvent
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	@SubscribeEvent public static void registerCapabilities(RegisterCapabilitiesEvent event) {
 		<#list blockentitiesWithInventory as blockentity>
 			event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ${blockentity.getModElement().getRegistryNameUpper()}.get(),
-				(blockEntity, side) -> new SidedInvWrapper((WorldlyContainer) blockEntity, side));
+				(blockEntity, side) -> ((${blockentity.getModElement().getName()}BlockEntity) blockEntity).getItemHandler());
 			<#if blockentity.hasEnergyStorage>
 			event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ${blockentity.getModElement().getRegistryNameUpper()}.get(),
 				(blockEntity, side) -> ((${blockentity.getModElement().getName()}BlockEntity) blockEntity).getEnergyStorage());
@@ -82,7 +80,7 @@ public class ${JavaModName}BlockEntities {
 		</#list>
 		<#list animatedBlockentitiesWithInventory as blockentity>
 			event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ${blockentity.getModElement().getRegistryNameUpper()}.get(),
-				(blockEntity, side) -> new SidedInvWrapper((WorldlyContainer) blockEntity, side));
+				(blockEntity, side) -> ((${blockentity.getModElement().getName()}TileEntity) blockEntity).getItemHandler());
 			<#if blockentity.hasEnergyStorage>
 			event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ${blockentity.getModElement().getRegistryNameUpper()}.get(),
 				(blockEntity, side) -> ((${blockentity.getModElement().getName()}TileEntity) blockEntity).getEnergyStorage());

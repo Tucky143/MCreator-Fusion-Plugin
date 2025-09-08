@@ -1,1 +1,0 @@
-This is the texture that each of the recipes in this category will use. It is smaller compared to a GUI texture, so you will need to make a downscaled version of your GUI's texture.

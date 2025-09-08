@@ -1,1 +1,0 @@
-Here the slots containing the recipes' items are added.

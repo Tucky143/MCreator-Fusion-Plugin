@@ -1,1 +1,0 @@
-This information will be added to the description of the items specified in JEI. Each entry to the string list is included as a new line.

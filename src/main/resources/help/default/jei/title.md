@@ -1,1 +1,0 @@
-This will be the title of the recipe type/category that will show up as a tooltip when hovering over the tab icon.

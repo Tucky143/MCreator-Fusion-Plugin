@@ -1,3 +1,0 @@
-(
-	${input$fluidstack}.getDisplayName().getString()
-)

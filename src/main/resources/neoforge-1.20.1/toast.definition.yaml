@@ -1,9 +1,0 @@
-templates:
-  - template: toast.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/client/toasts/@NAMEToast.java"
-
-localizationkeys:
-  - key: toasts.@modid.@registryname.title
-    mapto: title
-  - key: toasts.@modid.@registryname.description
-    mapto: description

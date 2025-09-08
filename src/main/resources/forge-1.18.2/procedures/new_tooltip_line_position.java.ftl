@@ -1,1 +1,0 @@
-tooltip.add(${opt.toInt(input$position)}, new TextComponent(${input$tooltiptext}));

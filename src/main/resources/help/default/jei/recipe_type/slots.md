@@ -1,1 +1,0 @@
-This is a list of item and fluid slots for recipes.

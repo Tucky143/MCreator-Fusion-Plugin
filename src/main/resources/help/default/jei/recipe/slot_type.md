@@ -1,1 +1,0 @@
-ITEM_INPUT slots contain item recipe ingredients, while the FLUID_INPUT slots contain the fluid recipe ingredients.

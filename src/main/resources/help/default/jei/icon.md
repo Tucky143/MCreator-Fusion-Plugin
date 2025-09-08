@@ -1,1 +1,0 @@
-This will be the item that will represent the icon of the recipe type in the JEI tab.

@@ -1,1 +1,0 @@
-The name of the configuration file that will generate in the configs folder.

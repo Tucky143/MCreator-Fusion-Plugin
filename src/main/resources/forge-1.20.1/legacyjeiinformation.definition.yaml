@@ -1,7 +1,0 @@
-global_templates:
-  - template: jei_information/info_plugin.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameJeiInformation.java"
-
-localizationkeys:
-  - key: jei.@modid.@registryname
-    mapto: getDescription()

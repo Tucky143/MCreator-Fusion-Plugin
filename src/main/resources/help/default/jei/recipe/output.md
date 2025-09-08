@@ -1,1 +1,0 @@
-This is the item that will show up in the output slot of the recipe, and the item that will bring up the recipe when clicked in JEI.

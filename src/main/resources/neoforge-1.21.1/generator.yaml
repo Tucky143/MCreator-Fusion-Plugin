@@ -51,14 +51,11 @@ armor_textures_dir: "@MODASSETSROOT/textures/models/armor"
 other_textures_dir: "@MODASSETSROOT/textures"
 
 # vanilla resources
-vanilla_resources_jar: ".*-client-extra-.*.jar"
+vanilla_resources_jar: ".*-client-extra.jar"
 vanilla_block_textures_dir: "assets/minecraft/textures/block"
 vanilla_item_textures_dir: "assets/minecraft/textures/item"
 
 base_templates:
-  - template: modbase/mixin.json.ftl
-    writer: json
-    name: "@RESROOT/mixin.@modid.json"
   - template: modbase/mod.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/@JavaModName.java"
   - template: modbase/neoforge.mods.toml.ftl
@@ -82,13 +79,11 @@ base_templates:
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameTabs.java"
     condition: hasItemsInTabs()
   - template: modbase/accesstransformer.cfg.ftl
-    usercodeComment: "#"
     writer: file
     name: "@RESROOT/META-INF/accesstransformer.cfg"
     condition_any:
       - "${w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether || e.hasVines() || e.hasFruits())?size != 0}"
       - "${w.hasElementsOfType('feature')}"
-      - "${w.hasElementsOfType('endbiome')}"
   - template: modbase/enumextensions.json.ftl
     writer: json
     name: "@RESROOT/META-INF/enumextensions.json"

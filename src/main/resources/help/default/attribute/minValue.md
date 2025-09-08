@@ -1,1 +1,0 @@
-Minimal value of the attribute. If the attribute is set below this value, the minimum value will overwrite the current one.

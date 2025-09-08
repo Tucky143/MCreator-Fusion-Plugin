@@ -1,0 +1,1 @@
+The items that the curios slot will be able to accept in-game.

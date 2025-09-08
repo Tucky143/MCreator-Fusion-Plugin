@@ -1,9 +1,0 @@
-global_templates:
-  - template: jei_recipe/empty_tag.json.ftl
-    writer: json
-    name: "@MODDATAROOT/tags/item/jei_empty_tag.json"
-
-templates:
-  - template: jei_recipe/recipe.json.ftl
-    writer: json
-    name: "@MODDATAROOT/recipe/@registryname.json"

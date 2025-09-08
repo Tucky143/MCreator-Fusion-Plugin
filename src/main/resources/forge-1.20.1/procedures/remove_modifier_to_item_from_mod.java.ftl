@@ -1,1 +1,0 @@
-_event.removeModifier(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(${input$name})), ${input$modifier});
