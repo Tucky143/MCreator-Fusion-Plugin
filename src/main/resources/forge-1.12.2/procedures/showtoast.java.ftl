@@ -1,1 +1,0 @@
-Minecraft.getInstance().getToasts().addToast(new ${input$toast}Toast());

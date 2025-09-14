@@ -1,1 +1,0 @@
-(${input$item}.is(ItemTags.DYEABLE) ? ${input&item}.get(DataComponents.DYED_COLOR).rgb() : ${input$otherwise})

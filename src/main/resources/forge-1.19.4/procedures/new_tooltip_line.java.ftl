@@ -1,1 +1,0 @@
-tooltip.add(Component.literal(${input$tooltiptext}));

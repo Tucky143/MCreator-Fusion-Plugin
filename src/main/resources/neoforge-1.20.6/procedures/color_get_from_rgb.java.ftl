@@ -1,1 +1,0 @@
-((${input$color} >> <#if field$redGreenBlue == "red">16<#elseif field$redGreenBlue == "green">8<#else>0</#if>) & 0xFF)

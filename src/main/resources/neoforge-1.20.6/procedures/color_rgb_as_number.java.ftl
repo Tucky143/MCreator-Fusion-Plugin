@@ -1,1 +1,0 @@
-(((255 & 0xFF) << 24) | ((${opt.toInt(input$red)} & 0xFF) << 16) | ((${opt.toInt(input$green)} & 0xFF) << 8) |((${opt.toInt(input$blue)} & 0xFF) << 0))
