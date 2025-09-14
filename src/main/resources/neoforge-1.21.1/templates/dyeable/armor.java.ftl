@@ -54,16 +54,16 @@ import net.minecraft.client.model.Model;
 				}),
 				${data.enchantability},
 				<#if data.equipSound?has_content && data.equipSound.getUnmappedValue()?has_content>
-				DeferredHolder.create(Registries.SOUND_EVENT, new ResourceLocation("${data.equipSound}")),
+				DeferredHolder.create(Registries.SOUND_EVENT, ResourceLocation.parse("${data.equipSound}")),
 				<#else>
 				BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY),
 				</#if>
 				() -> ${mappedMCItemsToIngredient(data.repairItems)},
-				List.of(new ArmorMaterial.Layer(new ResourceLocation("${modid}:${data.armorTextureFile}"), "", true)<#if data.hasArmorOverlayTexture()>, new ArmorMaterial.Layer(new ResourceLocation("${modid}:${data.armorOverlayTextureFile?remove_ending("_overlay")}"), "_overlay", false)</#if>),
+				List.of(new ArmorMaterial.Layer(ResourceLocation.parse("${modid}:${data.armorTextureFile}"), "", true)<#if data.hasArmorOverlayTexture()>, new ArmorMaterial.Layer(ResourceLocation.parse("${modid}:${data.armorOverlayTextureFile?remove_ending("_overlay")}"), "_overlay", false)</#if>),
 				${data.toughness}f,
 				${data.knockbackResistance}f
 			);
-			registerHelper.register(new ResourceLocation("${modid}:${registryname}"), armorMaterial);
+			registerHelper.register(ResourceLocation.parse("${modid}:${registryname}"), armorMaterial);
 			ARMOR_MATERIAL = BuiltInRegistries.ARMOR_MATERIAL.wrapAsHolder(armorMaterial);
 		});
 	}
@@ -103,7 +103,7 @@ import net.minecraft.client.model.Model;
 
 		<#if data.helmetModelTexture?has_content && data.helmetModelTexture != "From armor">
 		@Override public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-			return new ResourceLocation("${modid}:textures/entities/${data.helmetModelTexture}");
+			return ResourceLocation.parse("${modid}:textures/entities/${data.helmetModelTexture}");
 		}
 		</#if>
 
@@ -146,7 +146,7 @@ import net.minecraft.client.model.Model;
 
 		<#if data.bodyModelTexture?has_content && data.bodyModelTexture != "From armor">
 		@Override public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-			return new ResourceLocation("${modid}:textures/entities/${data.bodyModelTexture}");
+			return ResourceLocation.parse("${modid}:textures/entities/${data.bodyModelTexture}");
 		}
 		</#if>
 
@@ -189,7 +189,7 @@ import net.minecraft.client.model.Model;
 
 		<#if data.leggingsModelTexture?has_content && data.leggingsModelTexture != "From armor">
 		@Override public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-			return new ResourceLocation("${modid}:textures/entities/${data.leggingsModelTexture}");
+			return ResourceLocation.parse("${modid}:textures/entities/${data.leggingsModelTexture}");
 		}
 		</#if>
 
@@ -232,7 +232,7 @@ import net.minecraft.client.model.Model;
 
 		<#if data.bootsModelTexture?has_content && data.bootsModelTexture != "From armor">
 		@Override public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-			return new ResourceLocation("${modid}:textures/entities/${data.bootsModelTexture}");
+			return ResourceLocation.parse("${modid}:textures/entities/${data.bootsModelTexture}");
 		}
 		</#if>
 

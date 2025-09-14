@@ -55,7 +55,6 @@ base_templates:
   - template: modbase/mixins.json.ftl
     writer: json
     name: "@RESROOT/mixins.@modid.json"
-    canLock: true
   - template: modbase/mod.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/@JavaModName.java"
   - template: modbase/mods.toml.ftl

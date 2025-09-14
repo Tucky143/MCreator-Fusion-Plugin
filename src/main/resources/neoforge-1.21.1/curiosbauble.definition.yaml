@@ -42,6 +42,9 @@ global_templates:
     writer: json
     name: "@RESROOT/data/curios/tags/item/ring.json"
     condition: "${w.getGElementsOfType('curiosbauble')?filter(e -> e.slotType == 'RING')?size != 0}"
+  - template: bjson/slot_init.json.ftl
+    writer: json
+    name: "@MODDATAROOT/curios/entities/@registryname.json"
 
   - template: rendering/definitions.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameLayerDefinitions.java"

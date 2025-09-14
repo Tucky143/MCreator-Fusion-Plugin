@@ -22,6 +22,7 @@ import net.tucky143.fusion.parts.PluginActions;
 import net.tucky143.fusion.parts.PluginElementTypes;
 import net.tucky143.fusion.parts.PluginEventTriggers;
 import net.tucky143.fusion.ui.dialogs.AddOtherTagsDialog;
+import net.tucky143.fusion.ui.modgui.CuriosSlotGUI;
 
 import javax.swing.*;
 
@@ -104,6 +105,16 @@ public class Launcher extends JavaPlugin {
                 }
             }
 
+        });
+
+        addListener(ModElementGUIEvent.AfterLoading.class, event -> {
+            if (event.getModElementGUI() instanceof CuriosSlotGUI slotGUI) {
+                    try {
+                        disableComponent(slotGUI, slotGUI.getClass().getDeclaredField("items"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+            }
         });
 
 		LOG.info("Plugin was loaded");

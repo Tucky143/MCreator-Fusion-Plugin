@@ -1,14 +1,21 @@
+<#include "../../mcitems.ftl">
 {
   "replace": false,
   "values": [
-    <#assign baubles = []>
+    <#assign values = []>
     <#list w.getGElementsOfType("curiosbauble") as bauble>
       <#if bauble.slotType == "${data.getModElement().getName()}">
-        <#assign baubles += [bauble]>
+        <#assign values += ["${modid}:${bauble.getModElement().getRegistryName()}"]>
       </#if>
     </#list>
-    <#list baubles as bauble>
-      "${modid}:${bauble.getModElement().getRegistryName()}"<#sep>,
+    <#if data.items?? && data.items?has_content>
+      <#list data.items as item>
+        <#assign values += ["${mappedMCItemToRegistryName(item, false)}"]>
+      </#list>
+    </#if>
+
+    <#list values as v>
+      "${v}"<#if v?has_next>,</#if>
     </#list>
   ]
 }

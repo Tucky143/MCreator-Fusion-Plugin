@@ -6,7 +6,9 @@ templates:
   - template: bjson/identifiers/custom.json.ftl
     writer: json
     name: "@RESROOT/data/curios/tags/item/@registryname.json"
-
+  - template: bjson/slot_init.json.ftl
+    writer: json
+    name: "@MODDATAROOT/curios/entities/@registryname.json"
 localizationkeys:
   - key: curios.identifier.@registryname
     mapto: name
