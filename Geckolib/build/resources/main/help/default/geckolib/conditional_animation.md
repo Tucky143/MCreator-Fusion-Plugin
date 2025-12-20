@@ -1,1 +1,0 @@
-While a valid animation name is returned, will play that animation to the entity.

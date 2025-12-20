@@ -19,6 +19,10 @@ templates:
     writer: json
     name: "@MODASSETSROOT/models/item/@registryname.json"
 
+  - template: modbase/mixins.json.ftl
+    writer: json
+    name: "@RESROOT/@modid.mixins.json"
+
 localizationkeys:
   - key: item.@modid.@registryname
     mapto: name

@@ -70,7 +70,6 @@ public class ${name}Block extends BaseEntityBlock <#if data.isWaterloggable>impl
 
 	<#macro blockProperties>
 		BlockBehaviour.Properties.of()
-		${data.material}
 		<#if generator.map(data.colorOnMap, "mapcolors") != "DEFAULT">
 			.mapColor(MapColor.${generator.map(data.colorOnMap, "mapcolors")})
 		</#if>

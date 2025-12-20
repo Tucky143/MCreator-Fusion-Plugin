@@ -1,1 +1,0 @@
-Checking this parameter prevents the entity model from rotating to the side when the entity dies.

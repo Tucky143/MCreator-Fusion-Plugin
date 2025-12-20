@@ -37,7 +37,6 @@ import net.mcreator.ui.validation.validators.TextFieldValidator;
 import net.mcreator.ui.workspace.resources.TextureType;
 import net.mcreator.util.ListUtils;
 import net.mcreator.util.StringUtils;
-import net.mcreator.util.TestUtil;
 import net.mcreator.workspace.elements.ModElement;
 import net.mcreator.workspace.elements.VariableTypeLoader;
 import net.tucky143.geckolib.elements.AnimatedEntity;
@@ -202,14 +201,12 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
 
     private BiomeListField restrictionBiomes;
 
+    private BlocklyPanel blocklyPanel;
     private final CompileNotesPanel compileNotesPanel = new CompileNotesPanel();
     private boolean hasErrors = false;
     private Map<String, ToolboxBlock> externalBlocks;
-    private BlocklyPanel blocklyPanel;
 
     private final List<BlocklyChangedListener> blocklyChangedListeners = new ArrayList<>();
-
-    private boolean editorReady = false;
 
     private boolean disableMobModelCheckBoxListener = false;
 
@@ -265,18 +262,16 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
     }
 
     private void setDefaultAISet() {
-        blocklyPanel.setXML("""
-				<xml xmlns="https://developers.google.com/blockly/xml">
-				<block type="aitasks_container" deletable="false" x="40" y="40"><next>
-				<block type="attack_on_collide"><field name="speed">1.2</field><field name="longmemory">FALSE</field><field name="condition">null,null</field><next>
-				<block type="wander"><field name="speed">1</field><field name="condition">null,null</field><next>
-				<block type="attack_action"><field name="callhelp">FALSE</field><field name="condition">null,null</field><next>
-				<block type="look_around"><field name="condition">null,null</field><next>
-				<block type="swim_in_water"/><field name="condition">null,null</field></next>
-				</block></next></block></next></block></next></block></next></block></xml>""");
+        blocklyPanel.setXML("<xml xmlns=\"https://developers.google.com/blockly/xml\">"
+                + "<block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next>"
+                + "<block type=\"attack_on_collide\"><field name=\"speed\">1.2</field><field name=\"longmemory\">FALSE</field><next>"
+                + "<block type=\"wander\"><field name=\"speed\">1</field><next>"
+                + "<block type=\"attack_action\"><field name=\"callhelp\">FALSE</field><next>"
+                + "<block type=\"look_around\"><next><block type=\"swim_in_water\"/></next>"
+                + "</block></next></block></next></block></next></block></next></block></xml>");
     }
 
-    @Override public synchronized List<BlocklyCompileNote> regenerateBlockAssemblies(boolean jsEventTriggeredChange) {
+    private synchronized void regenerateAITasks() {
         BlocklyBlockCodeGenerator blocklyBlockCodeGenerator = new BlocklyBlockCodeGenerator(externalBlocks,
                 mcreator.getGeneratorStats().getBlocklyBlocks(BlocklyEditorType.AI_TASK));
 
@@ -285,8 +280,7 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
             blocklyToJava = new BlocklyToJava(mcreator.getWorkspace(), this.modElement, BlocklyEditorType.AI_TASK,
                     blocklyPanel.getXML(), null, new ProceduralBlockCodeGenerator(blocklyBlockCodeGenerator));
         } catch (TemplateGeneratorException e) {
-            TestUtil.failIfTestingEnvironment();
-            return List.of(); // should not be possible to happen here
+            return;
         }
 
         List<BlocklyCompileNote> compileNotesArrayList = blocklyToJava.getCompileNotes();
@@ -297,10 +291,6 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
         }
 
         SwingUtilities.invokeLater(() -> compileNotesPanel.updateCompileNotes(compileNotesArrayList));
-
-        blocklyChangedListeners.forEach(l -> l.blocklyChanged(blocklyPanel, jsEventTriggeredChange));
-
-        return compileNotesArrayList;
     }
 
     @Override protected void initGUI() {
@@ -376,7 +366,6 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
                         }
                     }
                 }
-                editorReady = true;
             }
         });
 
@@ -638,10 +627,8 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
                         L10N.label("elementgui.living_entity.mob_base")), aiBase));
 
         aiBase.setPreferredSize(new Dimension(250, 32));
-        aiBase.addActionListener(e -> {
-            if (editorReady)
-                regenerateBlockAssemblies(false);
-        });
+        aiBase.addActionListener(e -> regenerateAITasks());
+
         JPanel aitopoveral = new JPanel(new BorderLayout(5, 0));
         aitopoveral.setOpaque(false);
 
@@ -688,9 +675,8 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
         blocklyPanel.addTaskToRunAfterLoaded(() -> {
             BlocklyLoader.INSTANCE.getBlockLoader(BlocklyEditorType.AI_TASK)
                     .loadBlocksAndCategoriesInPanel(blocklyPanel, ToolboxType.AI_BUILDER);
-            blocklyPanel.addChangeListener(changeEvent -> new Thread(
-                    () -> regenerateBlockAssemblies(changeEvent.getSource() instanceof BlocklyPanel),
-                    "AITasksRegenerate").start());
+            blocklyPanel.addChangeListener(
+                    changeEvent -> new Thread(AnimatedEntityGUI.this::regenerateAITasks, "AITasksRegenerate").start());
             if (!isEditingMode()) {
                 setDefaultAISet();
             }
@@ -1129,7 +1115,7 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
 
         disableMobModelCheckBoxListener = false;
 
-        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), (Collection)PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
+        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), (Collection) PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".geo.json");
         }).collect(Collectors.toList())), "");
     }
@@ -1140,7 +1126,7 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
             return new AggregatedValidationResult(mobModelTexture, mobName, geoModel, animation1);
         } else if (page == 5) {
             if (hasErrors)
-                return new AggregatedValidationResult.FAIL("Something went wrong");
+                return new AggregatedValidationResult.FAIL(L10N.t("Something went wrong on page 5"));
         } else if (page == 6) {
             if ((int) minNumberOfMobsPerGroup.getValue() > (int) maxNumberOfMobsPerGroup.getValue()) {
                 return new AggregatedValidationResult.FAIL("Minimal mob group size can't be bigger than maximal size");
@@ -1151,8 +1137,6 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
 
     @Override public void openInEditingMode(AnimatedEntity livingEntity) {
         disableMobModelCheckBoxListener = true;
-        editorReady = false;
-
         this.geoModel.setSelectedItem(livingEntity.model);
         disableDeathRotation.setSelected(livingEntity.disableDeathRotation);
         deathTime.setValue(livingEntity.deathTime);
@@ -1328,7 +1312,6 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
 
         groupName.setEnabled(headMovement.isSelected());
         height.setEnabled(eyeHeight.isSelected());
-        editorReady = true;
 
     }
 
@@ -1473,6 +1456,11 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
 
     @Override public Set<BlocklyPanel> getBlocklyPanels() {
         return Set.of(blocklyPanel);
+    }
+
+    @Override
+    public List<BlocklyCompileNote> regenerateBlockAssemblies(boolean jsEventTriggeredChange) {
+        return List.of();
     }
 
 }

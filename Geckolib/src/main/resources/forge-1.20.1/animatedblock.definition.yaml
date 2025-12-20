@@ -46,6 +46,10 @@ templates:
   - template: ajson/block_particle.json.ftl
     name: "@MODASSETSROOT/models/custom/@registryname_particle.json"
 
+  - template: modbase/mixins.json.ftl
+    writer: json
+    name: "@RESROOT/@modid.mixins.json"
+
 tags:
   - tag: BLOCKS:minecraft:mineable/pickaxe
     condition: "${data.destroyTool == 'pickaxe'}"

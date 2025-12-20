@@ -1,1 +1,0 @@
-When this parameter is enabled, it will override the entity's eye height position of the hitbox to the specified value.

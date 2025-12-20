@@ -1,1 +1,0 @@
-This parameter determines the amount of ticks the entity will stay dead for after dying.

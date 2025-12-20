@@ -1,1 +1,0 @@
-While the returned value is true, animations played through the returned animation condition or animation procedures will loop.

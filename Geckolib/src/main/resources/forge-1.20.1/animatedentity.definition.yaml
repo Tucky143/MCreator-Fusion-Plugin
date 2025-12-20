@@ -24,6 +24,10 @@ templates:
     condition: spawnThisMob
     name: "@MODDATAROOT/forge/biome_modifier/@registryname_biome_modifier.json"
 
+  - template: modbase/mixins.json.ftl
+    writer: json
+    name: "@RESROOT/@modid.mixins.json"
+
 unmodifiable_ai_bases: [ Bat, MagmaCube, Slime ]
 
 localizationkeys:

@@ -1,1 +1,0 @@
-This animation will replace the walking animation if the entity is being ridden.

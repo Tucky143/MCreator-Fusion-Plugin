@@ -8,31 +8,9 @@ forge-1.20.1:
     }
     
     dependencies {
-      implementation 'software.bernie.geckolib:geckolib-forge-1.20.1:4.7.3'
-    
-        annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+      modImplementation 'software.bernie.geckolib:geckolib-forge-1.20.1:4.8.2'
     }
-    legacyForge {
-        validateAccessTransformers = true
 
-        runs {
-            client {
-                client()
-                programArguments.add("--mixin.env.remapRefMap=true")
-                programArguments.add("--mixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-            }
-            server {
-                server()
-                programArguments.add("--mixin.env.remapRefMap=true")
-                programArguments.add("--mixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-            }
-            data {
-                data()
-                programArguments.add("--mixin.env.remapRefMap=true")
-                programArguments.add("--mixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-            }
-        }
-    }
   update_files:
     - ~
 

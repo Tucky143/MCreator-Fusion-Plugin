@@ -1,1 +1,0 @@
-This animation will play while the entity has sprinting set to true, which can be done through the sprinting procedure block.

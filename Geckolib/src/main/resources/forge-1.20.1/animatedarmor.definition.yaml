@@ -130,6 +130,10 @@ templates:
     variables: "item=boots"
     name: "@MODASSETSROOT/models/item/@registryname_boots.json"
 
+  - template: modbase/mixins.json.ftl
+    writer: json
+    name: "@RESROOT/@modid.mixins.json"
+
 localizationkeys:
   - key: item.@modid.@registryname_helmet
     mapto: helmetName

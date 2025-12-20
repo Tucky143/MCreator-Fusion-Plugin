@@ -1,1 +1,0 @@
-If checked, the item used to place the block down will play the idle animation of the block.
