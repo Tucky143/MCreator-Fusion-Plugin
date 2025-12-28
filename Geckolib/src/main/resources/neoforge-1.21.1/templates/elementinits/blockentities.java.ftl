@@ -66,7 +66,8 @@ public class ${JavaModName}BlockEntities {
 
 	<#if blockentitiesWithInventory?size != 0 || animatedBlockentitiesWithInventory?size != 0>
 	<#compress>
-	@SubscribeEvent public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	@SubscribeEvent
+	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
 		<#list blockentitiesWithInventory as blockentity>
 			event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ${blockentity.getModElement().getRegistryNameUpper()}.get(),
 				(blockEntity, side) -> new SidedInvWrapper((WorldlyContainer) blockEntity, side));
