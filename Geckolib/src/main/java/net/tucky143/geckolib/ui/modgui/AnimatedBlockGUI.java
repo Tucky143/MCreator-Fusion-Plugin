@@ -925,38 +925,37 @@ public class AnimatedBlockGUI extends ModElementGUI<AnimatedBlock> implements Ge
 
     public void reloadDataLists() {
         super.reloadDataLists();
-        AbstractProcedureSelector.ReloadContext context = AbstractProcedureSelector.ReloadContext.create(
-                mcreator.getWorkspace());
-        this.onBlockAdded.refreshListKeepSelected(context);
-        this.onNeighbourBlockChanges.refreshListKeepSelected(context);
-        this.specialInformation.refreshListKeepSelected(context);
-        this.onEntityCollides.refreshListKeepSelected(context);
-        this.onTickUpdate.refreshListKeepSelected(context);
-        this.onRandomUpdateEvent.refreshListKeepSelected(context);
-        this.onDestroyedByPlayer.refreshListKeepSelected(context);
-        this.onDestroyedByExplosion.refreshListKeepSelected(context);
-        this.onStartToDestroy.refreshListKeepSelected(context);
-        this.onEntityWalksOn.refreshListKeepSelected(context);
-        this.onBlockPlayedBy.refreshListKeepSelected(context);
-        this.onRightClicked.refreshListKeepSelected(context);
-        this.onRedstoneOn.refreshListKeepSelected(context);
-        this.onRedstoneOff.refreshListKeepSelected(context);
-        this.onHitByProjectile.refreshListKeepSelected(context);
-        this.emittedRedstonePower.refreshListKeepSelected(context);
-        this.placingCondition.refreshListKeepSelected(context);
-        this.generateCondition.refreshListKeepSelected(context);
-        this.additionalHarvestCondition.refreshListKeepSelected(context);
-        ComboBoxUtil.updateComboBoxContents(this.guiBoundTo, ListUtils.merge(Collections.singleton("<NONE>"), (Collection)this.mcreator.getWorkspace().getModElements().stream().filter((var) -> {
+
+        this.onBlockAdded.refreshListKeepSelected();
+        this.onNeighbourBlockChanges.refreshListKeepSelected();
+        this.specialInformation.refreshListKeepSelected();
+        this.onEntityCollides.refreshListKeepSelected();
+        this.onTickUpdate.refreshListKeepSelected();
+        this.onRandomUpdateEvent.refreshListKeepSelected();
+        this.onDestroyedByPlayer.refreshListKeepSelected();
+        this.onDestroyedByExplosion.refreshListKeepSelected();
+        this.onStartToDestroy.refreshListKeepSelected();
+        this.onEntityWalksOn.refreshListKeepSelected();
+        this.onBlockPlayedBy.refreshListKeepSelected();
+        this.onRightClicked.refreshListKeepSelected();
+        this.onRedstoneOn.refreshListKeepSelected();
+        this.onRedstoneOff.refreshListKeepSelected();
+        this.onHitByProjectile.refreshListKeepSelected();
+        this.emittedRedstonePower.refreshListKeepSelected();
+        this.placingCondition.refreshListKeepSelected();
+        this.generateCondition.refreshListKeepSelected();
+        this.additionalHarvestCondition.refreshListKeepSelected();
+        ComboBoxUtil.updateComboBoxContents(this.guiBoundTo, ListUtils.merge(Collections.singleton("<NONE>"), this.mcreator.getWorkspace().getModElements().stream().filter((var) -> {
             return var.getType() == ModElementType.GUI;
         }).map(ModElement::getName).collect(Collectors.toList())), "<NONE>");
         ComboBoxUtil.updateComboBoxContents(this.colorOnMap, Arrays.asList(ElementUtil.getDataListAsStringArray("mapcolors")), "DEFAULT");
         ComboBoxUtil.updateComboBoxContents(this.aiPathNodeType, Arrays.asList(ElementUtil.getDataListAsStringArray("pathnodetypes")), "DEFAULT");
 
-        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), (Collection) PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
+        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".geo.json");
         }).collect(Collectors.toList())), "");
 
-        ComboBoxUtil.updateComboBoxContents(this.displaySettings, ListUtils.merge(Collections.singleton(""), (Collection) PluginModelActions.getDisplaysettings(this.mcreator).stream().map(File::getName).filter((s) -> {
+        ComboBoxUtil.updateComboBoxContents(this.displaySettings, ListUtils.merge(Collections.singleton(""), PluginModelActions.getDisplaysettings(this.mcreator).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".json");
         }).collect(Collectors.toList())), "");
     }
@@ -1169,19 +1168,19 @@ public class AnimatedBlockGUI extends ModElementGUI<AnimatedBlock> implements Ge
         block.inventoryStackSize = (Integer)this.inventoryStackSize.getValue();
         block.inventoryDropWhenDestroyed = this.inventoryDropWhenDestroyed.isSelected();
         block.inventoryComparatorPower = this.inventoryComparatorPower.isSelected();
-        if (this.outSlotIDs.getText().trim().equals("")) {
+        if (this.outSlotIDs.getText().trim().isEmpty()) {
             block.inventoryOutSlotIDs = new ArrayList();
         } else {
             block.inventoryOutSlotIDs = (java.util.List) Stream.of(this.outSlotIDs.getText().split(",")).filter((e) -> {
-                return !e.equals("");
+                return !e.isEmpty();
             }).map(Integer::parseInt).collect(Collectors.toList());
         }
 
-        if (this.inSlotIDs.getText().trim().equals("")) {
+        if (this.inSlotIDs.getText().trim().isEmpty()) {
             block.inventoryInSlotIDs = new ArrayList();
         } else {
             block.inventoryInSlotIDs = (List)Stream.of(this.inSlotIDs.getText().split(",")).filter((e) -> {
-                return !e.equals("");
+                return !e.isEmpty();
             }).map(Integer::parseInt).collect(Collectors.toList());
         }
 

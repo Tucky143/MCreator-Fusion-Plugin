@@ -830,7 +830,7 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
         pane7.setOpaque(false);
 
         mobModelTexture.setValidator(() -> {
-            if (mobModelTexture.getSelectedItem() == null || mobModelTexture.getSelectedItem().equals(""))
+            if (mobModelTexture.getSelectedItem() == null || mobModelTexture.getSelectedItem().isEmpty())
                 return new Validator.ValidationResult(Validator.ValidationResultType.ERROR,
                         L10N.t("elementgui.living_entity.error_entity_model_needs_texture"));
             return Validator.ValidationResult.PASSED;
@@ -841,7 +841,7 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
         mobName.enableRealtimeValidation();
 
         geoModel.setValidator(() -> {
-            if (geoModel.getSelectedItem() == null || geoModel.getSelectedItem().equals(""))
+            if (geoModel.getSelectedItem() == null || geoModel.getSelectedItem().isEmpty())
                 return new Validator.ValidationResult(Validator.ValidationResultType.ERROR,
                         L10N.t("elementgui.animatedentity.modelname"));
             return Validator.ValidationResult.PASSED;
@@ -1078,23 +1078,22 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
         disableMobModelCheckBoxListener = true;
 
         super.reloadDataLists();
-        AbstractProcedureSelector.ReloadContext context = AbstractProcedureSelector.ReloadContext.create(
-                mcreator.getWorkspace());
-        onStruckByLightning.refreshListKeepSelected(context);
-        whenMobFalls.refreshListKeepSelected(context);
-        whenMobDies.refreshListKeepSelected(context);
-        whenMobIsHurt.refreshListKeepSelected(context);
-        onRightClickedOn.refreshListKeepSelected(context);
-        whenThisMobKillsAnother.refreshListKeepSelected(context);
-        onMobTickUpdate.refreshListKeepSelected(context);
-        onPlayerCollidesWith.refreshListKeepSelected(context);
-        onInitialSpawn.refreshListKeepSelected(context);
-        finishedDying.refreshListKeepSelected(context);;
 
-        spawningCondition.refreshListKeepSelected(context);
-        visualScale.refreshListKeepSelected(context);
-        boundingBoxScale.refreshListKeepSelected(context);
-        solidBoundingBox.refreshListKeepSelected(context);
+        onStruckByLightning.refreshListKeepSelected();
+        whenMobFalls.refreshListKeepSelected();
+        whenMobDies.refreshListKeepSelected();
+        whenMobIsHurt.refreshListKeepSelected();
+        onRightClickedOn.refreshListKeepSelected();
+        whenThisMobKillsAnother.refreshListKeepSelected();
+        onMobTickUpdate.refreshListKeepSelected();
+        onPlayerCollidesWith.refreshListKeepSelected();
+        onInitialSpawn.refreshListKeepSelected();
+        finishedDying.refreshListKeepSelected();;
+
+        spawningCondition.refreshListKeepSelected();
+        visualScale.refreshListKeepSelected();
+        boundingBoxScale.refreshListKeepSelected();
+        solidBoundingBox.refreshListKeepSelected();
 
         ComboBoxUtil.updateComboBoxContents(mobModelTexture, ListUtils.merge(Collections.singleton(""),
                 mcreator.getFolderManager().getTexturesList(TextureType.ENTITY).stream().map(File::getName)
@@ -1115,7 +1114,7 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
 
         disableMobModelCheckBoxListener = false;
 
-        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), (Collection) PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
+        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".geo.json");
         }).collect(Collectors.toList())), "");
     }
@@ -1456,11 +1455,6 @@ public class AnimatedEntityGUI extends ModElementGUI<AnimatedEntity> implements 
 
     @Override public Set<BlocklyPanel> getBlocklyPanels() {
         return Set.of(blocklyPanel);
-    }
-
-    @Override
-    public List<BlocklyCompileNote> regenerateBlockAssemblies(boolean jsEventTriggeredChange) {
-        return List.of();
     }
 
 }

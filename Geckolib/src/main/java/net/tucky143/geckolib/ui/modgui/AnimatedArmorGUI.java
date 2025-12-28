@@ -501,7 +501,7 @@ public class AnimatedArmorGUI extends ModElementGUI<AnimatedArmor> implements Ge
         });
 
         armorTextureFile.setValidator(() -> {
-            if (armorTextureFile.getSelectedItem() == null || armorTextureFile.getSelectedItem().equals(""))
+            if (armorTextureFile.getSelectedItem() == null || armorTextureFile.getSelectedItem().isEmpty())
                 return new Validator.ValidationResult(Validator.ValidationResultType.ERROR,
                         L10N.t("elementgui.animatedarmor.texture_invalid"));
             return Validator.ValidationResult.PASSED;
@@ -554,7 +554,7 @@ public class AnimatedArmorGUI extends ModElementGUI<AnimatedArmor> implements Ge
         this.fullyEquipped.setOpaque(false);
 
         geoModel.setValidator(() -> {
-            if (geoModel.getSelectedItem() == null || geoModel.getSelectedItem().equals(""))
+            if (geoModel.getSelectedItem() == null || geoModel.getSelectedItem().isEmpty())
                 return new Validator.ValidationResult(Validator.ValidationResultType.ERROR,
                         L10N.t("elementgui.animatedentity.modelname"));
             return Validator.ValidationResult.PASSED;
@@ -591,15 +591,14 @@ public class AnimatedArmorGUI extends ModElementGUI<AnimatedArmor> implements Ge
     @Override public void reloadDataLists() {
         super.reloadDataLists();
 
-        ComboBoxUtil.updateComboBoxContents(this.armorTextureFile, ListUtils.merge(Collections.singleton(""), (Collection)this.mcreator.getFolderManager().getTexturesList(TextureType.ITEM).stream().map(File::getName).filter((s) -> {
+        ComboBoxUtil.updateComboBoxContents(this.armorTextureFile, ListUtils.merge(Collections.singleton(""), this.mcreator.getFolderManager().getTexturesList(TextureType.ITEM).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".png");
         }).collect(Collectors.toList())), "");
-        AbstractProcedureSelector.ReloadContext context = AbstractProcedureSelector.ReloadContext.create(
-                mcreator.getWorkspace());
-        onHelmetTick.refreshListKeepSelected(context);
-        onBodyTick.refreshListKeepSelected(context);
-        onLeggingsTick.refreshListKeepSelected(context);
-        onBootsTick.refreshListKeepSelected(context);
+
+        onHelmetTick.refreshListKeepSelected();
+        onBodyTick.refreshListKeepSelected();
+        onLeggingsTick.refreshListKeepSelected();
+        onBootsTick.refreshListKeepSelected();
 
         ComboBoxUtil.updateComboBoxContents(helmetItemRenderType, ListUtils.merge(Arrays.asList(normal, tool),
                 Model.getModelsWithTextureMaps(mcreator.getWorkspace()).stream()
@@ -622,7 +621,7 @@ public class AnimatedArmorGUI extends ModElementGUI<AnimatedArmor> implements Ge
                         .collect(Collectors.toList())));
 
         ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""),
-                (Collection)PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
+                PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".geo.json");
         }).collect(Collectors.toList())), "");
 

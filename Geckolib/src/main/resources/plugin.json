@@ -3,12 +3,12 @@
   "weight": 4200,
   "javaplugin": "net.tucky143.geckolib.Launcher",
   "supportedversions": [
-    2025003
+    2025002
   ],
   "info": {
     "name": "Fusion: Geckolib",
     "version": "1.0",
-    "description": "Unsupported Version of Geckolib 1.20.1",
+    "description": "Unsupported Version of Geckolib",
     "author": "Tucky143"
   }
 }
