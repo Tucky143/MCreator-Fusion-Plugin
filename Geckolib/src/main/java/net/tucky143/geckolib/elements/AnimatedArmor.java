@@ -261,7 +261,7 @@ public class AnimatedArmor extends GeneratableElement implements IItem, ITabCont
 
     @Override
     public List<MCItem> providedMCItems() {
-        ArrayList<MCItem> retval = new ArrayList();
+        ArrayList<MCItem> retval = new ArrayList<>();
         if (this.enableHelmet) {
             retval.add(new MCItem.Custom(this.getModElement(), "helmet", "item", "Helmet"));
         }

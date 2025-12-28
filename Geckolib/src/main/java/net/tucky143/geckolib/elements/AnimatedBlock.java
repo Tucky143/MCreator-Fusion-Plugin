@@ -211,8 +211,8 @@ public class AnimatedBlock extends GeneratableElement implements IBlock, ITabCon
     public AnimatedBlock(ModElement element) {
         super(element);
         this.tintType = "No tint";
-        this.boundingBoxes = new ArrayList();
-        this.restrictionBiomes = new ArrayList();
+        this.boundingBoxes = new ArrayList<>();
+        this.restrictionBiomes = new ArrayList<>();
         this.blocksToReplace = new ArrayList<>();
         this.reactionToPushing = "NORMAL";
         this.slipperiness = 0.6;
@@ -222,8 +222,8 @@ public class AnimatedBlock extends GeneratableElement implements IBlock, ITabCon
         this.aiPathNodeType = "DEFAULT";
         this.offsetType = "NONE";
         this.generationShape = "UNIFORM";
-        this.inventoryInSlotIDs = new ArrayList();
-        this.inventoryOutSlotIDs = new ArrayList();
+        this.inventoryInSlotIDs = new ArrayList<>();
+        this.inventoryOutSlotIDs = new ArrayList<>();
         this.energyCapacity = 400000;
         this.energyMaxReceive = 200;
         this.energyMaxExtract = 200;
@@ -262,7 +262,7 @@ public class AnimatedBlock extends GeneratableElement implements IBlock, ITabCon
     }
 
     public boolean isFullCube() {
-        return !"Stairs".equals(this.blockBase) && !"Slab".equals(this.blockBase) && !"Fence".equals(this.blockBase) && !"Wall".equals(this.blockBase) && !"TrapDoor".equals(this.blockBase) && !"Door".equals(this.blockBase) && !"FenceGate".equals(this.blockBase) && !"EndRod".equals(this.blockBase) && !"PressurePlate".equals(this.blockBase) && !"Button".equals(this.blockBase) ? IBlockWithBoundingBox.super.isFullCube() : false;
+        return !"Stairs".equals(this.blockBase) && !"Slab".equals(this.blockBase) && !"Fence".equals(this.blockBase) && !"Wall".equals(this.blockBase) && !"TrapDoor".equals(this.blockBase) && !"Door".equals(this.blockBase) && !"FenceGate".equals(this.blockBase) && !"EndRod".equals(this.blockBase) && !"PressurePlate".equals(this.blockBase) && !"Button".equals(this.blockBase) && IBlockWithBoundingBox.super.isFullCube();
     }
 
     public List<TabEntry> getCreativeTabs() {
@@ -335,7 +335,7 @@ public class AnimatedBlock extends GeneratableElement implements IBlock, ITabCon
     }
 
     public Collection<BaseType> getBaseTypesProvided() {
-        List<BaseType> baseTypes = new ArrayList(List.of(BaseType.BLOCK, BaseType.ITEM, BaseType.BLOCKENTITY));
+        List<BaseType> baseTypes = new ArrayList<>(List.of(BaseType.BLOCK, BaseType.ITEM, BaseType.BLOCKENTITY));
         if (generateFeature && getModElement().getGenerator().getGeneratorConfiguration().getGeneratorFlavor()
                 == GeneratorFlavor.FABRIC) {
             baseTypes.add(BaseType.FEATURE);

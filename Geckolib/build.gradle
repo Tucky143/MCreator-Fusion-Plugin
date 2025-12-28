@@ -38,7 +38,7 @@ dependencies {
 }
 
 tasks.jar {
-    archiveFileName.set("fusion-geckolib-2025.3.zip")
+    archiveFileName.set("fusion-geckolib-2025.2.zip")
 }
 
 tasks.register('runMCreatorWithPlugin', JavaExec) {

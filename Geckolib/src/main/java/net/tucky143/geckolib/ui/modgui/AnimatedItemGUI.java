@@ -56,7 +56,7 @@ public class AnimatedItemGUI extends ModElementGUI<AnimatedItem> implements Geck
     private final VTextField idle = new VTextField(20);
     private final JSpinner stackSize = new JSpinner(new SpinnerNumberModel(64, 0, 64, 1));
     private final VTextField name = new VTextField(20);
-    private final JComboBox<String> rarity = new JComboBox(new String[]{"COMMON", "UNCOMMON", "RARE", "EPIC"});
+    private final JComboBox<String> rarity = new JComboBox<>(new String[]{"COMMON", "UNCOMMON", "RARE", "EPIC"});
     private final MCItemHolder recipeRemainder;
     private final JSpinner enchantability;
     private final JSpinner useDuration;
@@ -106,8 +106,8 @@ public class AnimatedItemGUI extends ModElementGUI<AnimatedItem> implements Geck
 
     public AnimatedItemGUI(MCreator mcreator, ModElement modElement, boolean editingMode) {
         super(mcreator, modElement, editingMode);
-        this.geoModel = new SearchableComboBox();
-        this.displaySettings = new SearchableComboBox();
+        this.geoModel = new SearchableComboBox<>();
+        this.displaySettings = new SearchableComboBox<>();
         this.recipeRemainder = new MCItemHolder(this.mcreator, ElementUtil::loadBlocksAndItems);
         this.enchantability = new JSpinner(new SpinnerNumberModel(0, -100, 128000, 1));
         this.useDuration = new JSpinner(new SpinnerNumberModel(0, -100, 128000, 1));
@@ -124,7 +124,7 @@ public class AnimatedItemGUI extends ModElementGUI<AnimatedItem> implements Geck
         this.page1group = new ValidationGroup();
         this.damageVsEntity = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 128000.0, 0.1));
         this.enableMeleeDamage = new JCheckBox();
-        this.guiBoundTo = new JComboBox();
+        this.guiBoundTo = new JComboBox<>();
         this.inventorySize = new JSpinner(new SpinnerNumberModel(9, 0, 256, 1));
         this.inventoryStackSize = new JSpinner(new SpinnerNumberModel(64, 1, 1024, 1));
         this.isFood = L10N.checkbox("elementgui.common.enable", new Object[0]);
@@ -132,7 +132,7 @@ public class AnimatedItemGUI extends ModElementGUI<AnimatedItem> implements Geck
         this.saturation = new JSpinner(new SpinnerNumberModel(0.3, -1000.0, 1000.0, 0.1));
         this.isMeat = L10N.checkbox("elementgui.common.enable", new Object[0]);
         this.isAlwaysEdible = L10N.checkbox("elementgui.common.enable", new Object[0]);
-        this.animation = new JComboBox(new String[]{"none", "eat", "block", "bow", "crossbow", "drink", "spear"});
+        this.animation = new JComboBox<>(new String[]{"none", "eat", "block", "bow", "crossbow", "drink", "spear"});
         this.eatResultItem = new MCItemHolder(this.mcreator, ElementUtil::loadBlocksAndItems);
         this.initGUI();
         super.finalizeGUI();
@@ -363,14 +363,14 @@ public class AnimatedItemGUI extends ModElementGUI<AnimatedItem> implements Geck
         }
 
         geoModel.setValidator(() -> {
-            if (geoModel.getSelectedItem() == null || geoModel.getSelectedItem().equals(""))
+            if (geoModel.getSelectedItem() == null || geoModel.getSelectedItem().isEmpty())
                 return new Validator.ValidationResult(Validator.ValidationResultType.ERROR,
                         L10N.t("elementgui.animatedentity.modelname"));
             return Validator.ValidationResult.PASSED;
         });
 
         displaySettings.setValidator(() -> {
-            if (displaySettings.getSelectedItem() == null || displaySettings.getSelectedItem().equals(""))
+            if (displaySettings.getSelectedItem() == null || displaySettings.getSelectedItem().isEmpty())
                 return new Validator.ValidationResult(Validator.ValidationResultType.ERROR,
                         L10N.t("elementgui.animatedentity.modelname"));
             return Validator.ValidationResult.PASSED;
@@ -404,29 +404,28 @@ public class AnimatedItemGUI extends ModElementGUI<AnimatedItem> implements Geck
 
     public void reloadDataLists() {
         super.reloadDataLists();
-        AbstractProcedureSelector.ReloadContext context = AbstractProcedureSelector.ReloadContext.create(
-                mcreator.getWorkspace());
-        this.onRightClickedInAir.refreshListKeepSelected(context);
-        this.onCrafted.refreshListKeepSelected(context);
-        this.onRightClickedOnBlock.refreshListKeepSelected(context);
-        this.onEntityHitWith.refreshListKeepSelected(context);
-        this.specialInformation.refreshListKeepSelected(context);
-        this.onItemInInventoryTick.refreshListKeepSelected(context);
-        this.onItemInUseTick.refreshListKeepSelected(context);
-        this.onStoppedUsing.refreshListKeepSelected(context);
-        this.onEntitySwing.refreshListKeepSelected(context);
-        this.onDroppedByPlayer.refreshListKeepSelected(context);
-        this.onFinishUsingItem.refreshListKeepSelected(context);
-        this.glowCondition.refreshListKeepSelected(context);
-        ComboBoxUtil.updateComboBoxContents(this.guiBoundTo, ListUtils.merge(Collections.singleton("<NONE>"), (Collection)this.mcreator.getWorkspace().getModElements().stream().filter((var) -> {
+
+        this.onRightClickedInAir.refreshListKeepSelected();
+        this.onCrafted.refreshListKeepSelected();
+        this.onRightClickedOnBlock.refreshListKeepSelected();
+        this.onEntityHitWith.refreshListKeepSelected();
+        this.specialInformation.refreshListKeepSelected();
+        this.onItemInInventoryTick.refreshListKeepSelected();
+        this.onItemInUseTick.refreshListKeepSelected();
+        this.onStoppedUsing.refreshListKeepSelected();
+        this.onEntitySwing.refreshListKeepSelected();
+        this.onDroppedByPlayer.refreshListKeepSelected();
+        this.onFinishUsingItem.refreshListKeepSelected();
+        this.glowCondition.refreshListKeepSelected();
+        ComboBoxUtil.updateComboBoxContents(this.guiBoundTo, ListUtils.merge(Collections.singleton("<NONE>"), this.mcreator.getWorkspace().getModElements().stream().filter((var) -> {
             return var.getType() == ModElementType.GUI;
         }).map(ModElement::getName).collect(Collectors.toList())), "<NONE>");
 
-        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), (Collection)PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
+        ComboBoxUtil.updateComboBoxContents(this.geoModel, ListUtils.merge(Collections.singleton(""), PluginModelActions.getGeomodels(this.mcreator).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".geo.json");
         }).collect(Collectors.toList())), "");
 
-        ComboBoxUtil.updateComboBoxContents(this.displaySettings, ListUtils.merge(Collections.singleton(""), (Collection)PluginModelActions.getDisplaysettings(this.mcreator).stream().map(File::getName).filter((s) -> {
+        ComboBoxUtil.updateComboBoxContents(this.displaySettings, ListUtils.merge(Collections.singleton(""), PluginModelActions.getDisplaysettings(this.mcreator).stream().map(File::getName).filter((s) -> {
             return s.endsWith(".json");
         }).collect(Collectors.toList())), "");
     }
